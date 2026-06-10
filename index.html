@@ -23,9 +23,23 @@
   <meta name="twitter:description" content="Join LivChat Agency India and start earning through host recruitment, team building, and weekly commissions." />
   <meta name="twitter:image" content="https://livchatagency.in/Hero.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#6C3CE1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LivChat" />
+  <meta name="msapplication-TileColor" content="#6C3CE1" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -724,5 +738,62 @@
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 
 <script src="script.js"></script>
+
+<!-- PWA: Service Worker + Install Prompt -->
+<div id="pwa-install-banner" style="display:none;" role="dialog" aria-label="Install LivChat app">
+  <div class="pwa-banner-inner">
+    <img src="/icons/icon-72x72.png" width="44" height="44" alt="LivChat icon" />
+    <div class="pwa-banner-text">
+      <strong>Install LivChat App</strong>
+      <span>Add to home screen for the best experience</span>
+    </div>
+    <div class="pwa-banner-actions">
+      <button id="pwa-install-btn" class="btn btn-primary btn-sm">Install</button>
+      <button id="pwa-dismiss-btn" class="btn btn-ghost btn-sm" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .catch((err) => console.warn('SW registration failed:', err));
+    });
+  }
+
+  // PWA Install Prompt
+  let deferredPrompt = null;
+  const banner = document.getElementById('pwa-install-banner');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const dismissBtn = document.getElementById('pwa-dismiss-btn');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!sessionStorage.getItem('pwa-dismissed')) {
+      banner.style.display = 'flex';
+    }
+  });
+
+  installBtn && installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    banner.style.display = 'none';
+  });
+
+  dismissBtn && dismissBtn.addEventListener('click', () => {
+    banner.style.display = 'none';
+    sessionStorage.setItem('pwa-dismissed', '1');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    banner.style.display = 'none';
+    deferredPrompt = null;
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6C3CE1"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#F3E8FF;stop-opacity:0.85"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="115" fill="url(#bg)"/>
+  <!-- Chat bubble main -->
+  <path d="M140 160 C140 134 161 113 187 113 L325 113 C351 113 372 134 372 160 L372 270 C372 296 351 317 325 317 L290 317 L256 370 L222 317 L187 317 C161 317 140 296 140 270 Z" fill="url(#icon)"/>
+  <!-- Live indicator dot -->
+  <circle cx="320" cy="195" r="18" fill="#EC4899"/>
+  <!-- Play/stream bars inside bubble -->
+  <rect x="178" y="180" width="14" height="50" rx="7" fill="#6C3CE1" opacity="0.7"/>
+  <rect x="202" y="165" width="14" height="65" rx="7" fill="#6C3CE1" opacity="0.85"/>
+  <rect x="226" y="175" width="14" height="55" rx="7" fill="#6C3CE1" opacity="0.7"/>
+  <rect x="250" y="158" width="14" height="72" rx="7" fill="#6C3CE1"/>
+  <!-- "LC" text hint - small -->
+  <text x="256" y="440" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="800" font-size="72" fill="white" opacity="0.9">LC</text>
+</svg>

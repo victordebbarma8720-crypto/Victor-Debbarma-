@@ -23,9 +23,23 @@
   <meta name="twitter:description" content="Become a LivChat Host and earn money from home through video calls, flash calls, and virtual gifts." />
   <meta name="twitter:image" content="https://livchatagency.in/Hero.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="favicon.png" />
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#6C3CE1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LivChat" />
+  <meta name="msapplication-TileColor" content="#6C3CE1" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -654,5 +668,14 @@
 
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 <script src="script.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .catch((err) => console.warn('SW registration failed:', err));
+    });
+  }
+</script>
 </body>
 </html>
