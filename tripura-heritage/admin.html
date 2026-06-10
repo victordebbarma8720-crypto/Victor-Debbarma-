@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Admin dashboard — Tripura Heritage product management.">
+  <meta name="theme-color" content="#C8860A">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — Tripura Heritage</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Tripura Heritage Home">
+        <div class="nav__logo-icon">TH</div>
+        <div class="nav__logo-text">
+          Tripura Heritage
+          <span class="nav__logo-sub">Admin Panel</span>
+        </div>
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalog.html">Catalog</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="admin.html" class="active">Admin</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">
+          🛒
+          <span class="cart-badge" style="display:none">0</span>
+        </a>
+        <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav__mobile-menu" role="menu">
+    <a href="index.html" role="menuitem">🏠 Home</a>
+    <a href="catalog.html" role="menuitem">🛍️ Catalog</a>
+    <a href="cart.html" role="menuitem">🛒 Cart</a>
+    <a href="admin.html" role="menuitem">⚙️ Admin</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-header__title">⚙️ Admin Dashboard</h1>
+      <p class="page-header__desc">Manage products, inventory, and store content</p>
+    </div>
+  </div>
+
+  <!-- ADMIN CONTENT -->
+  <main class="admin-page" role="main" id="admin-content">
+    <div class="container">
+
+      <!-- STATS -->
+      <div class="admin-section">
+        <div class="admin-stats" id="admin-stats">
+          <!-- Rendered by app.js -->
+          <div class="stat-card">
+            <div class="stat-card__value" style="font-size:1.5rem;color:var(--text-faint)">—</div>
+            <div class="stat-card__label">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD PRODUCT FORM -->
+      <div class="admin-section">
+        <div class="admin-section__title">
+          <span>➕</span> Add New Product
+        </div>
+
+        <form class="admin-form" id="add-product-form" novalidate>
+          <div class="form-grid">
+            <div class="form-group" style="grid-column: 1 / -1">
+              <label class="form-label" for="ap-name">Product Name *</label>
+              <input
+                type="text"
+                class="form-input"
+                id="ap-name"
+                name="name"
+                placeholder="e.g. Rignai Traditional Wrap Skirt - Black"
+                required
+                autocomplete="off"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ap-category">Category *</label>
+              <select class="form-select" id="ap-category" name="category" required>
+                <option value="">Select category</option>
+                <option value="Rignai">Rignai</option>
+                <option value="Risa">Risa</option>
+                <option value="Rikutu">Rikutu</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ap-price">Price in ₹ *</label>
+              <input
+                type="number"
+                class="form-input"
+                id="ap-price"
+                name="price"
+                placeholder="e.g. 1899"
+                min="1"
+                max="99999"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ap-sizes">Sizes (comma-separated)</label>
+              <input
+                type="text"
+                class="form-input"
+                id="ap-sizes"
+                name="sizes"
+                placeholder="e.g. S, M, L, XL or One Size"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="ap-image">Image URL</label>
+              <input
+                type="url"
+                class="form-input"
+                id="ap-image"
+                name="image"
+                placeholder="https://example.com/image.jpg"
+              >
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1">
+              <label class="form-label" for="ap-desc">Description *</label>
+              <textarea
+                class="form-textarea"
+                id="ap-desc"
+                name="description"
+                placeholder="Describe the product, its materials, cultural significance, and ideal occasions..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="submit" class="btn btn-primary">
+              <span>➕</span> Add Product
+            </button>
+            <button type="reset" class="btn btn-ghost btn-sm">Reset Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- PRODUCT TABLE -->
+      <div class="admin-section">
+        <div class="admin-section__title">
+          <span>📋</span> All Products
+          <span style="margin-left:auto;font-size:0.8rem;font-weight:400;color:var(--text-muted)">Click Edit to modify • Click Delete to remove</span>
+        </div>
+
+        <div id="admin-table-container" aria-live="polite">
+          <!-- Rendered by app.js -->
+          <div style="text-align:center;padding:40px;color:var(--text-muted)">
+            <p>⏳ Loading products...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div class="admin-section">
+        <div class="admin-section__title" style="color:var(--danger);border-color:rgba(220,38,38,0.2)">
+          <span>⚠️</span> Danger Zone
+        </div>
+        <div style="background:rgba(220,38,38,0.05);border:1px solid rgba(220,38,38,0.2);border-radius:var(--radius-md);padding:20px">
+          <p style="margin-bottom:14px;font-size:0.88rem">These actions cannot be undone. Use with extreme caution.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-danger" id="reset-products-btn">
+              🔄 Reset All Products to Default
+            </button>
+            <button class="btn btn-danger" id="clear-storage-btn">
+              🗑 Clear All Local Storage
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border:none;padding-top:0">
+        <p>© 2024 Tripura Heritage Admin Panel — For internal use only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Danger zone buttons (after app.js loads)
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('reset-products-btn')?.addEventListener('click', () => {
+        if (confirm('Reset ALL products to default? This will remove any custom products you added.')) {
+          localStorage.removeItem('th-products');
+          showToast('Products reset to defaults', 'success');
+          setTimeout(() => window.location.reload(), 800);
+        }
+      });
+
+      document.getElementById('clear-storage-btn')?.addEventListener('click', () => {
+        if (confirm('Clear ALL local storage? This will remove cart, products, and settings.')) {
+          localStorage.clear();
+          showToast('All data cleared', 'success');
+          setTimeout(() => window.location.href = 'index.html', 800);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
