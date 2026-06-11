@@ -1,0 +1,12 @@
+# robots.txt — Kome Agency India
+# https://komeagency.tech
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://komeagency.tech/kome-sitemap.xml
+
+# Block admin or private directories (add if needed)
+# Disallow: /admin/
+# Disallow: /private/
