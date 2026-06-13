@@ -1615,6 +1615,106 @@ textarea.form-input { min-height: 120px; resize: vertical; }
 }
 
 /* ══════════════════════════════════════
+   DOWNLOAD / REFERRAL SECTION
+══════════════════════════════════════ */
+.download-section {
+  background: linear-gradient(135deg, rgba(255,107,53,0.08) 0%, rgba(124,58,237,0.06) 100%);
+  border: 1px solid rgba(255,107,53,0.2);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.download-section::before {
+  content: '';
+  position: absolute;
+  top: -40%; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 350px;
+  background: radial-gradient(ellipse, rgba(255,107,53,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.download-bilingual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 2rem;
+}
+
+.download-bilingual p {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.5;
+}
+
+.download-bilingual p:last-child {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.referral-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,107,53,0.3);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.5rem;
+  margin: 1.5rem auto;
+}
+
+.referral-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.referral-code {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+}
+
+.referral-copy {
+  background: rgba(255,184,0,0.12);
+  border: 1px solid rgba(255,184,0,0.25);
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.referral-copy:hover { background: rgba(255,184,0,0.22); }
+.referral-copy.copied { background: rgba(16,185,129,0.15); color: var(--success); border-color: rgba(16,185,129,0.3); }
+
+.download-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.btn-apk {
+  background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+}
+
+.btn-apk:hover { box-shadow: 0 6px 30px rgba(124,58,237,0.5); transform: translateY(-2px); }
+
+/* ══════════════════════════════════════
    PRINT
 ══════════════════════════════════════ */
 @media print {

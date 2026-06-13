@@ -134,6 +134,31 @@
     }
   });
 
+  /* ── Referral code copy buttons ── */
+  document.querySelectorAll('.referral-copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.closest('.referral-box')?.querySelector('.referral-code')?.textContent?.trim();
+      if (!code) return;
+      navigator.clipboard?.writeText(code).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
+      }).catch(() => {
+        /* Fallback */
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2200);
+      });
+    });
+  });
+
   /* ── WhatsApp float attention pulse on first load ── */
   const waFloat = document.querySelector('.wa-float-btn');
   if (waFloat) {
