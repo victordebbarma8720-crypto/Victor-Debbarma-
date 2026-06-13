@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://livchatagency.in/sitemap.xml
+# Block old LivChat files if they remain
+Disallow: /livchat-agency.html
+Disallow: /livchat-host.html
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
+
+Sitemap: https://vitokagent.com/sitemap.xml
