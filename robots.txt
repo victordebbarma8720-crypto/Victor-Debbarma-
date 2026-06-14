@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://livchatagency.in/sitemap.xml
+# Sitemap
+Sitemap: https://cliveagency.in/sitemap.xml
+
+# Crawl-delay (optional, for polite crawlers)
+Crawl-delay: 10
