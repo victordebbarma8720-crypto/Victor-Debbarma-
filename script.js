@@ -6,6 +6,16 @@
 (function () {
   'use strict';
 
+  // ====== FLOATING WHATSAPP BUTTON ======
+  const waFloat = document.createElement('a');
+  waFloat.href = 'https://wa.me/918132958338?text=Hi%2C%20I%20want%20to%20know%20more%20about%20Chingari%20registration.';
+  waFloat.target = '_blank';
+  waFloat.rel = 'noopener noreferrer';
+  waFloat.className = 'whatsapp-float';
+  waFloat.setAttribute('aria-label', 'Chat on WhatsApp');
+  waFloat.innerHTML = '<span class="whatsapp-float-label">WhatsApp Support</span><div class="whatsapp-float-btn">💬</div>';
+  document.body.appendChild(waFloat);
+
   // ====== HEADER SCROLL ======
   const header = document.getElementById('header');
   if (header) {
