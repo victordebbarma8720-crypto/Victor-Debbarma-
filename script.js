@@ -1,122 +1,56 @@
 /* ===========================
-   LivChat Agency India
-   script.js - Main JavaScript
+   ChingariLive Agency India
+   script.js — Main JavaScript
    =========================== */
 
 (function () {
   'use strict';
 
-  /* ===========================
-     STICKY HEADER
-     =========================== */
-  const header = document.querySelector('.header');
+  // ====== HEADER SCROLL ======
+  const header = document.getElementById('header');
   if (header) {
     const onScroll = () => {
-      header.classList.toggle('scrolled', window.scrollY > 30);
+      header.classList.toggle('scrolled', window.scrollY > 40);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
 
-  /* ===========================
-     HAMBURGER MENU
-     =========================== */
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
+  // ====== HAMBURGER / MOBILE NAV ======
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
 
-  if (hamburger && mobileMenu) {
+  if (hamburger && mobileNav) {
     hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+      if (mobileNav.classList.contains('open') &&
+          !mobileNav.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        mobileNav.classList.remove('open');
         hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
         hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target) && !mobileMenu.contains(e.target)) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && hamburger.classList.contains('open')) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      }
     });
   }
 
-  /* ===========================
-     ACTIVE NAV LINK
-     =========================== */
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    const page = href.split('/').pop().split('#')[0] || 'index.html';
-    if (page === currentPath || (currentPath === '' && page === 'index.html')) {
-      a.classList.add('active');
-    }
-  });
-
-  /* ===========================
-     FAQ ACCORDION
-     =========================== */
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(openItem => {
-        openItem.classList.remove('open');
-      });
-
-      // Open clicked if was closed
-      if (!isOpen) {
-        item.classList.add('open');
-      }
-    });
-  });
-
-  /* ===========================
-     AOS SCROLL ANIMATIONS
-     =========================== */
-  const aosObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.getAttribute('data-aos-delay') || '0');
-        setTimeout(() => {
-          entry.target.classList.add('aos-animate');
-        }, delay);
-        aosObserver.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  document.querySelectorAll('[data-aos]').forEach(el => aosObserver.observe(el));
-
-  /* ===========================
-     SCROLL TO TOP
-     =========================== */
-  const scrollTopBtn = document.querySelector('.scroll-top');
+  // ====== SCROLL TO TOP ======
+  const scrollTopBtn = document.getElementById('scrollTop');
   if (scrollTopBtn) {
     window.addEventListener('scroll', () => {
       scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
@@ -127,191 +61,131 @@
     });
   }
 
-  /* ===========================
-     CONTACT FORM
-     =========================== */
-  const contactForm = document.querySelector('#contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', e => {
+  // ====== FAQ ACCORDION ======
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+
+    if (!question || !answer) return;
+
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      faqItems.forEach(other => {
+        if (other !== item) {
+          other.classList.remove('open');
+          const otherQ = other.querySelector('.faq-question');
+          if (otherQ) otherQ.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      item.classList.toggle('open', !isOpen);
+      question.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  // ====== FORM HANDLING ======
+  function handleFormSubmit(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
+      const name = form.querySelector('[name="name"]')?.value?.trim();
+      const phone = form.querySelector('[name="phone"]')?.value?.trim();
 
-      // Simulate async submission
+      if (!name) {
+        showFormMessage(form, 'Please enter your full name.', 'error');
+        return;
+      }
+
+      if (!phone || phone.replace(/[\s\-\+]/g, '').length < 10) {
+        showFormMessage(form, 'Please enter a valid phone number.', 'error');
+        return;
+      }
+
+      const subject = form.querySelector('[name="subject"]')?.value || '';
+      const city = form.querySelector('[name="city"]')?.value?.trim() || '';
+      const message = form.querySelector('[name="message"]')?.value?.trim() || '';
+      const experience = form.querySelector('[name="experience"]')?.value || '';
+      const teamSize = form.querySelector('[name="teamSize"]')?.value || '';
+      const age = form.querySelector('[name="age"]')?.value || '';
+
+      let wa = `Hi, I want to register with ChingariLive.\n\nName: ${name}\nPhone: ${phone}`;
+      if (age) wa += `\nAge: ${age}`;
+      if (city) wa += `\nCity: ${city}`;
+      if (subject) wa += `\nQuery: ${subject}`;
+      if (experience) wa += `\nExperience: ${experience}`;
+      if (teamSize) wa += `\nTeam Size: ${teamSize}`;
+      if (message) wa += `\n\nMessage: ${message}`;
+
+      showFormMessage(form, '✅ Redirecting you to WhatsApp for immediate support...', 'success');
+
       setTimeout(() => {
-        contactForm.reset();
-        btn.textContent = originalText;
-        btn.disabled = false;
-
-        const successMsg = document.querySelector('.form-success');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 5000);
-        }
-      }, 1000);
+        window.open(`https://wa.me/918132958338?text=${encodeURIComponent(wa)}`, '_blank', 'noopener,noreferrer');
+        form.reset();
+      }, 1200);
     });
   }
 
-  /* ===========================
-     BLOG SEARCH FILTER
-     =========================== */
-  const blogSearch = document.querySelector('#blog-search');
-  if (blogSearch) {
-    blogSearch.addEventListener('input', () => {
-      const q = blogSearch.value.toLowerCase().trim();
-      document.querySelectorAll('.blog-card').forEach(card => {
-        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
-        const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
-        const visible = !q || title.includes(q) || desc.includes(q);
-        card.style.display = visible ? '' : 'none';
-      });
-    });
+  function showFormMessage(form, text, type) {
+    let msg = form.querySelector('.form-msg');
+    if (!msg) {
+      msg = document.createElement('div');
+      msg.className = 'form-msg';
+      msg.style.cssText = 'padding:12px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:16px;transition:all 0.3s ease;';
+      const btn = form.querySelector('button[type="submit"]');
+      form.insertBefore(msg, btn);
+    }
+    msg.textContent = text;
+    msg.style.background = type === 'success' ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)';
+    msg.style.border = `1px solid ${type === 'success' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`;
+    msg.style.color = type === 'success' ? '#22c55e' : '#ef4444';
   }
 
-  const blogSearchBtn = document.querySelector('.blog-search-btn');
-  if (blogSearchBtn) {
-    blogSearchBtn.addEventListener('click', () => {
-      const input = document.querySelector('#blog-search');
-      if (input) input.dispatchEvent(new Event('input'));
-    });
-  }
+  handleFormSubmit('hostForm');
+  handleFormSubmit('agencyForm');
+  handleFormSubmit('contactForm');
 
-  /* ===========================
-     BLOG CATEGORY FILTER
-     =========================== */
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const cat = btn.getAttribute('data-cat');
-      document.querySelectorAll('.blog-card').forEach(card => {
-        if (!cat || cat === 'all') {
-          card.style.display = '';
-        } else {
-          const cardCat = card.getAttribute('data-category') || '';
-          card.style.display = cardCat === cat ? '' : 'none';
-        }
-      });
-    });
-  });
-
-  /* ===========================
-     SMOOTH HASH SCROLL
-     =========================== */
-  document.querySelectorAll('a[href*="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href') || '';
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const hash = href.slice(hashIndex + 1);
-      const page = href.slice(0, hashIndex);
-      const isCurrentPage = !page || page === currentPath || page === '' || page === 'index.html';
-
-      if (isCurrentPage && hash) {
-        const target = document.getElementById(hash);
-        if (target) {
-          e.preventDefault();
-          const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset - 10;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
+  // ====== SMOOTH SCROLL ======
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
 
-  /* ===========================
-     COUNTER ANIMATION
-     =========================== */
-  const counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'));
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1500;
-        const start = performance.now();
-
-        const animate = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-        counterObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-
-    counters.forEach(c => counterObserver.observe(c));
-  }
-
-  /* ===========================
-     TABLE ROW HIGHLIGHT
-     =========================== */
-  document.querySelectorAll('.commission-table tbody tr, .level-table tbody tr').forEach(row => {
-    row.addEventListener('mouseenter', () => row.classList.add('hovered'));
-    row.addEventListener('mouseleave', () => row.classList.remove('hovered'));
-  });
-
-  /* ===========================
-     LAZY LOAD IMAGES
-     =========================== */
+  // ====== ANIMATE ON SCROLL ======
   if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-          imgObserver.unobserve(img);
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
         }
       });
-    });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
-    document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
-  }
+    const animatable = document.querySelectorAll(
+      '.benefit-card, .step-card, .why-card, .program-card, .blog-card, .elig-item, .faq-item, .info-stat'
+    );
 
-  /* ===========================
-     WHATSAPP BUTTON TOOLTIP
-     =========================== */
-  const waFloat = document.querySelector('.whatsapp-float');
-  if (waFloat) {
-    // Show tooltip after 3s
-    setTimeout(() => {
-      const tooltip = waFloat.querySelector('.whatsapp-tooltip');
-      if (tooltip) {
-        tooltip.style.opacity = '1';
-        tooltip.style.transform = 'translateX(0)';
-        setTimeout(() => {
-          tooltip.style.opacity = '';
-          tooltip.style.transform = '';
-        }, 3000);
-      }
-    }, 3000);
-  }
-
-  /* ===========================
-     PHONE NUMBER FORMATTER
-     =========================== */
-  const phoneInput = document.querySelector('input[type="tel"]');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', e => {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.length > 10) val = val.slice(0, 10);
-      e.target.value = val;
+    animatable.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = `opacity 0.5s ease ${(i % 6) * 0.07}s, transform 0.5s ease ${(i % 6) * 0.07}s`;
+      observer.observe(el);
     });
   }
 
