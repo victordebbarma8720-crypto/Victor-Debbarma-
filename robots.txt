@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://livchatagency.in/sitemap.xml
+# Disallow temporary or admin paths (add as needed)
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://kandyofficial.in/sitemap.xml
+
+# Crawl-delay for bots
+Crawl-delay: 1
