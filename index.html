@@ -103,6 +103,22 @@
 </head>
 <body>
 
+<!-- ===== INVITE BAR ===== -->
+<div class="invite-bar" role="banner" aria-label="Invitation Code">
+  <div class="container">
+    <div class="invite-bar-inner">
+      <span class="invite-bar-text">
+        🎉 Use Invitation Code when registering:
+        <span class="invite-code-chip" title="Click to copy" onclick="navigator.clipboard.writeText('NGEU9578').then(()=>this.textContent='✅ Copied!')">NGEU9578</span>
+        <span class="invite-copy-hint">(tap to copy)</span>
+      </span>
+      <a href="https://frnd1.blr1.digitaloceanspaces.com/Kandy.apk" class="invite-bar-btn" download>
+        📥 Download Kandy App
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- ===== HEADER ===== -->
 <header id="site-header">
   <div class="container">
@@ -144,6 +160,12 @@
         <div class="hero-buttons">
           <a href="kandy-hosting.html" class="btn btn-primary btn-lg">🎙️ Join as Host</a>
           <a href="kandy-agency.html" class="btn btn-secondary btn-lg">🏢 Join as Agency</a>
+          <a href="https://frnd1.blr1.digitaloceanspaces.com/Kandy.apk" class="btn btn-gold btn-lg" download>📥 Download Kandy App</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px;">
+          <span style="font-size: 0.82rem; color: var(--text-muted);">🎟️ Invitation / Referral Code:</span>
+          <span class="invite-code-chip" title="Click to copy" onclick="navigator.clipboard.writeText('NGEU9578').then(()=>{this.textContent='✅ Copied!';setTimeout(()=>this.textContent='NGEU9578',2000)})">NGEU9578</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Use this when signing up</span>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
