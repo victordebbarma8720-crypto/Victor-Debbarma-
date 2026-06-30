@@ -1,317 +1,137 @@
-/* ===========================
-   LivChat Agency India
-   script.js - Main JavaScript
-   =========================== */
+/* ============================================================
+   Mastianchors.com — Main JavaScript
+   ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ===========================
-     STICKY HEADER
-     =========================== */
-  const header = document.querySelector('.header');
-  if (header) {
-    const onScroll = () => {
-      header.classList.toggle('scrolled', window.scrollY > 30);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  /* --- Navbar scroll effect --- */
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function () {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
   }
 
-  /* ===========================
-     HAMBURGER MENU
-     =========================== */
+  /* --- Hamburger / mobile menu --- */
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
 
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
     });
 
-    // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    /* Close on link click */
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
         hamburger.classList.remove('open');
         mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-        hamburger.setAttribute('aria-expanded', 'false');
       });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target) && !mobileMenu.contains(e.target)) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && hamburger.classList.contains('open')) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      }
     });
   }
 
-  /* ===========================
-     ACTIVE NAV LINK
-     =========================== */
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    const page = href.split('/').pop().split('#')[0] || 'index.html';
-    if (page === currentPath || (currentPath === '' && page === 'index.html')) {
-      a.classList.add('active');
-    }
-  });
+  /* --- Active nav link --- */
+  (function highlightNav() {
+    var current = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(function (a) {
+      if (a.getAttribute('href') === current) {
+        a.classList.add('active');
+      }
+    });
+  })();
 
-  /* ===========================
-     FAQ ACCORDION
-     =========================== */
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
+  /* --- FAQ accordion --- */
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    var question = item.querySelector('.faq-question');
+    var answer   = item.querySelector('.faq-answer');
+    if (!question || !answer) return;
 
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+    question.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+
+      /* Close all */
+      document.querySelectorAll('.faq-item.open').forEach(function (openItem) {
         openItem.classList.remove('open');
+        var a = openItem.querySelector('.faq-answer');
+        if (a) a.style.maxHeight = '0';
       });
 
-      // Open clicked if was closed
+      /* Toggle clicked */
       if (!isOpen) {
         item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
       }
     });
   });
 
-  /* ===========================
-     AOS SCROLL ANIMATIONS
-     =========================== */
-  const aosObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.getAttribute('data-aos-delay') || '0');
-        setTimeout(() => {
-          entry.target.classList.add('aos-animate');
-        }, delay);
-        aosObserver.unobserve(entry.target);
-      }
+  /* --- Back to top --- */
+  var backToTop = document.getElementById('back-to-top');
+  if (backToTop) {
+    window.addEventListener('scroll', function () {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  document.querySelectorAll('[data-aos]').forEach(el => aosObserver.observe(el));
-
-  /* ===========================
-     SCROLL TO TOP
-     =========================== */
-  const scrollTopBtn = document.querySelector('.scroll-top');
-  if (scrollTopBtn) {
-    window.addEventListener('scroll', () => {
-      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
-
-    scrollTopBtn.addEventListener('click', () => {
+    backToTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  /* ===========================
-     CONTACT FORM
-     =========================== */
-  const contactForm = document.querySelector('#contact-form');
+  /* --- Contact form submit (demo) --- */
+  var contactForm = document.getElementById('contact-form');
   if (contactForm) {
-    contactForm.addEventListener('submit', e => {
+    contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-
-      // Simulate async submission
-      setTimeout(() => {
+      var btn = contactForm.querySelector('.form-submit');
+      var original = btn.textContent;
+      btn.textContent = 'Message Sent! ✓';
+      btn.disabled   = true;
+      btn.style.background = '#16a34a';
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.disabled   = false;
+        btn.style.background = '';
         contactForm.reset();
-        btn.textContent = originalText;
-        btn.disabled = false;
-
-        const successMsg = document.querySelector('.form-success');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 5000);
-        }
-      }, 1000);
+      }, 3000);
     });
   }
 
-  /* ===========================
-     BLOG SEARCH FILTER
-     =========================== */
-  const blogSearch = document.querySelector('#blog-search');
-  if (blogSearch) {
-    blogSearch.addEventListener('input', () => {
-      const q = blogSearch.value.toLowerCase().trim();
-      document.querySelectorAll('.blog-card').forEach(card => {
-        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
-        const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
-        const visible = !q || title.includes(q) || desc.includes(q);
-        card.style.display = visible ? '' : 'none';
-      });
-    });
-  }
-
-  const blogSearchBtn = document.querySelector('.blog-search-btn');
-  if (blogSearchBtn) {
-    blogSearchBtn.addEventListener('click', () => {
-      const input = document.querySelector('#blog-search');
-      if (input) input.dispatchEvent(new Event('input'));
-    });
-  }
-
-  /* ===========================
-     BLOG CATEGORY FILTER
-     =========================== */
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const cat = btn.getAttribute('data-cat');
-      document.querySelectorAll('.blog-card').forEach(card => {
-        if (!cat || cat === 'all') {
-          card.style.display = '';
-        } else {
-          const cardCat = card.getAttribute('data-category') || '';
-          card.style.display = cardCat === cat ? '' : 'none';
-        }
-      });
-    });
-  });
-
-  /* ===========================
-     SMOOTH HASH SCROLL
-     =========================== */
-  document.querySelectorAll('a[href*="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href') || '';
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const hash = href.slice(hashIndex + 1);
-      const page = href.slice(0, hashIndex);
-      const isCurrentPage = !page || page === currentPath || page === '' || page === 'index.html';
-
-      if (isCurrentPage && hash) {
-        const target = document.getElementById(hash);
-        if (target) {
-          e.preventDefault();
-          const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset - 10;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
+  /* --- Smooth scroll for anchor links --- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        var navH = navbar ? navbar.offsetHeight : 68;
+        var top  = target.getBoundingClientRect().top + window.scrollY - navH - 8;
+        window.scrollTo({ top: top, behavior: 'smooth' });
       }
     });
   });
 
-  /* ===========================
-     COUNTER ANIMATION
-     =========================== */
-  const counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'));
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1500;
-        const start = performance.now();
-
-        const animate = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-        counterObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-
-    counters.forEach(c => counterObserver.observe(c));
-  }
-
-  /* ===========================
-     TABLE ROW HIGHLIGHT
-     =========================== */
-  document.querySelectorAll('.commission-table tbody tr, .level-table tbody tr').forEach(row => {
-    row.addEventListener('mouseenter', () => row.classList.add('hovered'));
-    row.addEventListener('mouseleave', () => row.classList.remove('hovered'));
-  });
-
-  /* ===========================
-     LAZY LOAD IMAGES
-     =========================== */
+  /* --- Scroll reveal animation --- */
   if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-          imgObserver.unobserve(img);
-        }
-      });
+    var style = document.createElement('style');
+    style.textContent = '.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; } .reveal.visible { opacity: 1; transform: none; }';
+    document.head.appendChild(style);
+
+    document.querySelectorAll(
+      '.feature-card, .step-card, .earning-card, .blog-card, .benefit-item, .rule-item, .faq-item'
+    ).forEach(function (el) {
+      el.classList.add('reveal');
     });
 
-    document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
-  }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-  /* ===========================
-     WHATSAPP BUTTON TOOLTIP
-     =========================== */
-  const waFloat = document.querySelector('.whatsapp-float');
-  if (waFloat) {
-    // Show tooltip after 3s
-    setTimeout(() => {
-      const tooltip = waFloat.querySelector('.whatsapp-tooltip');
-      if (tooltip) {
-        tooltip.style.opacity = '1';
-        tooltip.style.transform = 'translateX(0)';
-        setTimeout(() => {
-          tooltip.style.opacity = '';
-          tooltip.style.transform = '';
-        }, 3000);
-      }
-    }, 3000);
-  }
-
-  /* ===========================
-     PHONE NUMBER FORMATTER
-     =========================== */
-  const phoneInput = document.querySelector('input[type="tel"]');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', e => {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.length > 10) val = val.slice(0, 10);
-      e.target.value = val;
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      observer.observe(el);
     });
   }
 
