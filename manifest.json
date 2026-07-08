@@ -1,0 +1,26 @@
+{
+  "name": "Vone Agency India",
+  "short_name": "Vone Agency",
+  "description": "Become a Vone Host or start your own Vone Agency. Registration guidance, host earning info, and WhatsApp support.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0F0E17",
+  "theme_color": "#6C3CE1",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

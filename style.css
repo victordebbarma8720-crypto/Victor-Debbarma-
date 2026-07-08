@@ -1,5 +1,5 @@
 /* ===========================
-   LivChat Agency India
+   Vone Agency India
    style.css - Complete Styles
    =========================== */
 
@@ -1257,6 +1257,20 @@ ul { list-style: none; }
 
 .footer-contact-item a:hover { color: var(--primary-light); }
 
+.footer-disclaimer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 0;
+}
+
+.footer-disclaimer p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 24px 0;
@@ -1633,7 +1647,7 @@ ul { list-style: none; }
    =========================== */
 .earn-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 24px;
 }
 

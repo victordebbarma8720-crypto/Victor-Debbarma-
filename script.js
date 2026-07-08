@@ -1,5 +1,5 @@
 /* ===========================
-   LivChat Agency India
+   Vone Agency India
    script.js - Main JavaScript
    =========================== */
 
