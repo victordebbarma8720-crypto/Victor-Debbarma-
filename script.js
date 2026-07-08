@@ -1,318 +1,235 @@
-/* ===========================
-   LivChat Agency India
-   script.js - Main JavaScript
-   =========================== */
+/* =========================================================
+   YOMI OFFICIAL — script.js
+   Vanilla JavaScript. No dependencies.
+   ========================================================= */
 
 (function () {
-  'use strict';
+  "use strict";
 
-  /* ===========================
-     STICKY HEADER
-     =========================== */
-  const header = document.querySelector('.header');
-  if (header) {
-    const onScroll = () => {
-      header.classList.toggle('scrolled', window.scrollY > 30);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+    initHeaderScroll();
+    initMobileMenu();
+    initThemeToggle();
+    initFaqAccordion();
+    initScrollSpy();
+    initScrollTop();
+    initAos();
+    initStatCounters();
+    initSmoothAnchors();
+  });
 
-  /* ===========================
-     HAMBURGER MENU
-     =========================== */
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      hamburger.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target) && !mobileMenu.contains(e.target)) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
+  /* ---------- Sticky header shadow on scroll ---------- */
+  function initHeaderScroll() {
+    var header = document.querySelector(".header");
+    if (!header) return;
+    function onScroll() {
+      if (window.scrollY > 12) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
       }
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && hamburger.classList.contains('open')) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-
-  /* ===========================
-     ACTIVE NAV LINK
-     =========================== */
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    const page = href.split('/').pop().split('#')[0] || 'index.html';
-    if (page === currentPath || (currentPath === '' && page === 'index.html')) {
-      a.classList.add('active');
     }
-  });
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 
-  /* ===========================
-     FAQ ACCORDION
-     =========================== */
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
+  /* ---------- Mobile menu toggle ---------- */
+  function initMobileMenu() {
+    var hamburger = document.querySelector(".hamburger");
+    var menu = document.getElementById("mobile-menu");
+    if (!hamburger || !menu) return;
 
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(openItem => {
-        openItem.classList.remove('open');
+    function closeMenu() {
+      hamburger.setAttribute("aria-expanded", "false");
+      menu.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    hamburger.addEventListener("click", function () {
+      var expanded = hamburger.getAttribute("aria-expanded") === "true";
+      hamburger.setAttribute("aria-expanded", String(!expanded));
+      menu.classList.toggle("open");
+      document.body.style.overflow = expanded ? "" : "hidden";
+    });
+
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMenu();
+    });
+  }
+
+  /* ---------- Dark mode toggle ---------- */
+  function initThemeToggle() {
+    var toggle = document.querySelector(".theme-toggle");
+    var root = document.documentElement;
+    var stored = null;
+    try {
+      stored = localStorage.getItem("yomi-theme");
+    } catch (e) { /* localStorage unavailable */ }
+
+    if (stored === "dark" || stored === "light") {
+      root.setAttribute("data-theme", stored);
+    }
+
+    if (!toggle) return;
+    toggle.addEventListener("click", function () {
+      var current = root.getAttribute("data-theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var isDark = current ? current === "dark" : prefersDark;
+      var next = isDark ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try {
+        localStorage.setItem("yomi-theme", next);
+      } catch (e) { /* localStorage unavailable */ }
+    });
+  }
+
+  /* ---------- FAQ accordion ---------- */
+  function initFaqAccordion() {
+    var questions = document.querySelectorAll(".faq-question");
+    questions.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var expanded = btn.getAttribute("aria-expanded") === "true";
+        var answer = document.getElementById(btn.getAttribute("aria-controls"));
+
+        // Close other items within the same faq-list for a clean accordion feel
+        var list = btn.closest(".faq-list");
+        if (list) {
+          list.querySelectorAll(".faq-question[aria-expanded='true']").forEach(function (other) {
+            if (other !== btn) {
+              other.setAttribute("aria-expanded", "false");
+              var otherAnswer = document.getElementById(other.getAttribute("aria-controls"));
+              if (otherAnswer) otherAnswer.style.maxHeight = null;
+            }
+          });
+        }
+
+        btn.setAttribute("aria-expanded", String(!expanded));
+        if (answer) {
+          answer.style.maxHeight = expanded ? null : answer.scrollHeight + "px";
+        }
       });
-
-      // Open clicked if was closed
-      if (!isOpen) {
-        item.classList.add('open');
-      }
     });
-  });
+  }
 
-  /* ===========================
-     AOS SCROLL ANIMATIONS
-     =========================== */
-  const aosObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.getAttribute('data-aos-delay') || '0');
-        setTimeout(() => {
-          entry.target.classList.add('aos-animate');
-        }, delay);
-        aosObserver.unobserve(entry.target);
-      }
+  /* ---------- Scroll spy for active nav link ---------- */
+  function initScrollSpy() {
+    var sections = document.querySelectorAll("main section[id]");
+    var navLinks = document.querySelectorAll(".nav-links a[href^='#'], .mobile-menu a[href^='#']");
+    if (!sections.length || !navLinks.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute("id");
+          navLinks.forEach(function (link) {
+            var match = link.getAttribute("href") === "#" + id;
+            if (match) {
+              link.setAttribute("aria-current", "page");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+
+    sections.forEach(function (section) {
+      observer.observe(section);
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
+  }
 
-  document.querySelectorAll('[data-aos]').forEach(el => aosObserver.observe(el));
-
-  /* ===========================
-     SCROLL TO TOP
-     =========================== */
-  const scrollTopBtn = document.querySelector('.scroll-top');
-  if (scrollTopBtn) {
-    window.addEventListener('scroll', () => {
-      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  /* ---------- Scroll-to-top button ---------- */
+  function initScrollTop() {
+    var btn = document.querySelector(".scroll-top");
+    if (!btn) return;
+    window.addEventListener("scroll", function () {
+      btn.classList.toggle("visible", window.scrollY > 500);
     }, { passive: true });
-
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  /* ===========================
-     CONTACT FORM
-     =========================== */
-  const contactForm = document.querySelector('#contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', e => {
-      e.preventDefault();
+  /* ---------- Scroll reveal animations ---------- */
+  function initAos() {
+    var items = document.querySelectorAll("[data-aos]");
+    if (!items.length) return;
 
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (el) { el.classList.add("aos-visible"); });
+      return;
+    }
 
-      // Simulate async submission
-      setTimeout(() => {
-        contactForm.reset();
-        btn.textContent = originalText;
-        btn.disabled = false;
-
-        const successMsg = document.querySelector('.form-success');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 5000);
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("aos-visible");
+          obs.unobserve(entry.target);
         }
-      }, 1000);
-    });
-  }
-
-  /* ===========================
-     BLOG SEARCH FILTER
-     =========================== */
-  const blogSearch = document.querySelector('#blog-search');
-  if (blogSearch) {
-    blogSearch.addEventListener('input', () => {
-      const q = blogSearch.value.toLowerCase().trim();
-      document.querySelectorAll('.blog-card').forEach(card => {
-        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
-        const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
-        const visible = !q || title.includes(q) || desc.includes(q);
-        card.style.display = visible ? '' : 'none';
       });
-    });
+    }, { threshold: 0.12 });
+
+    items.forEach(function (el) { observer.observe(el); });
   }
 
-  const blogSearchBtn = document.querySelector('.blog-search-btn');
-  if (blogSearchBtn) {
-    blogSearchBtn.addEventListener('click', () => {
-      const input = document.querySelector('#blog-search');
-      if (input) input.dispatchEvent(new Event('input'));
-    });
-  }
+  /* ---------- Animated stat counters ---------- */
+  function initStatCounters() {
+    var counters = document.querySelectorAll(".stat-number[data-count]");
+    if (!counters.length) return;
 
-  /* ===========================
-     BLOG CATEGORY FILTER
-     =========================== */
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    function animate(el) {
+      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+      var suffix = el.getAttribute("data-suffix") || "";
+      var duration = 1400;
+      var start = null;
 
-      const cat = btn.getAttribute('data-cat');
-      document.querySelectorAll('.blog-card').forEach(card => {
-        if (!cat || cat === 'all') {
-          card.style.display = '';
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var value = Math.floor(progress * target);
+        el.textContent = value + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
         } else {
-          const cardCat = card.getAttribute('data-category') || '';
-          card.style.display = cardCat === cat ? '' : 'none';
-        }
-      });
-    });
-  });
-
-  /* ===========================
-     SMOOTH HASH SCROLL
-     =========================== */
-  document.querySelectorAll('a[href*="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href') || '';
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const hash = href.slice(hashIndex + 1);
-      const page = href.slice(0, hashIndex);
-      const isCurrentPage = !page || page === currentPath || page === '' || page === 'index.html';
-
-      if (isCurrentPage && hash) {
-        const target = document.getElementById(hash);
-        if (target) {
-          e.preventDefault();
-          const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset - 10;
-          window.scrollTo({ top, behavior: 'smooth' });
+          el.textContent = target + suffix;
         }
       }
-    });
-  });
+      window.requestAnimationFrame(step);
+    }
 
-  /* ===========================
-     COUNTER ANIMATION
-     =========================== */
-  const counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'));
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1500;
-        const start = performance.now();
+    if (!("IntersectionObserver" in window)) {
+      counters.forEach(animate);
+      return;
+    }
 
-        const animate = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-        counterObserver.unobserve(el);
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          obs.unobserve(entry.target);
+        }
       });
     }, { threshold: 0.5 });
 
-    counters.forEach(c => counterObserver.observe(c));
+    counters.forEach(function (el) { observer.observe(el); });
   }
 
-  /* ===========================
-     TABLE ROW HIGHLIGHT
-     =========================== */
-  document.querySelectorAll('.commission-table tbody tr, .level-table tbody tr').forEach(row => {
-    row.addEventListener('mouseenter', () => row.classList.add('hovered'));
-    row.addEventListener('mouseleave', () => row.classList.remove('hovered'));
-  });
-
-  /* ===========================
-     LAZY LOAD IMAGES
-     =========================== */
-  if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-          imgObserver.unobserve(img);
-        }
+  /* ---------- Smooth anchor scrolling fallback ---------- */
+  function initSmoothAnchors() {
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        var hash = link.getAttribute("href");
+        if (hash.length < 2) return;
+        var target = document.querySelector(hash);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.pushState(null, "", hash);
       });
     });
-
-    document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
   }
-
-  /* ===========================
-     WHATSAPP BUTTON TOOLTIP
-     =========================== */
-  const waFloat = document.querySelector('.whatsapp-float');
-  if (waFloat) {
-    // Show tooltip after 3s
-    setTimeout(() => {
-      const tooltip = waFloat.querySelector('.whatsapp-tooltip');
-      if (tooltip) {
-        tooltip.style.opacity = '1';
-        tooltip.style.transform = 'translateX(0)';
-        setTimeout(() => {
-          tooltip.style.opacity = '';
-          tooltip.style.transform = '';
-        }, 3000);
-      }
-    }, 3000);
-  }
-
-  /* ===========================
-     PHONE NUMBER FORMATTER
-     =========================== */
-  const phoneInput = document.querySelector('input[type="tel"]');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', e => {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.length > 10) val = val.slice(0, 10);
-      e.target.value = val;
-    });
-  }
-
 })();
