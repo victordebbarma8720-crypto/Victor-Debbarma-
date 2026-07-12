@@ -164,8 +164,9 @@ section { padding: 80px 0; }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
 
 .hero-image img {
-  width: 100%; max-width: 400px; margin: 0 auto;
+  display: block; width: 400px; height: 400px; max-width: 100%; margin: 0 auto;
   border-radius: 50%;
+  object-fit: cover; object-position: center 55%;
   box-shadow: 0 0 0 16px rgba(232,23,74,0.12), 0 0 0 32px rgba(155,40,176,0.08), 0 24px 80px rgba(155,40,176,0.35), 0 8px 32px rgba(232,23,74,0.25);
 }
 
