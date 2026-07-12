@@ -1,318 +1,243 @@
-/* ===========================
-   LivChat Agency India
-   script.js - Main JavaScript
-   =========================== */
-
+/* =========================================================
+   HollahOfficial.com — script.js
+   Vanilla JavaScript. No libraries.
+   ========================================================= */
 (function () {
-  'use strict';
+  "use strict";
 
-  /* ===========================
-     STICKY HEADER
-     =========================== */
-  const header = document.querySelector('.header');
-  if (header) {
-    const onScroll = () => {
-      header.classList.toggle('scrolled', window.scrollY > 30);
+  /* ---------- Mobile navigation ---------- */
+  var navToggle = document.getElementById("navToggle");
+  var navMenu = document.getElementById("primaryMenu");
+
+  function closeMenu() {
+    if (!navToggle || !navMenu) return;
+    navToggle.setAttribute("aria-expanded", "false");
+    navMenu.classList.remove("is-open");
+  }
+
+  function openMenu() {
+    if (!navToggle || !navMenu) return;
+    navToggle.setAttribute("aria-expanded", "true");
+    navMenu.classList.add("is-open");
+  }
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", function () {
+      var expanded = navToggle.getAttribute("aria-expanded") === "true";
+      if (expanded) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    navMenu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        closeMenu();
+      });
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
+        closeMenu();
+        navToggle.focus();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      var isOpen = navToggle.getAttribute("aria-expanded") === "true";
+      if (!isOpen) return;
+      if (!navMenu.contains(event.target) && !navToggle.contains(event.target)) {
+        closeMenu();
+      }
+    });
+  }
+
+  /* ---------- Header scroll state ---------- */
+  var siteHeader = document.getElementById("siteHeader");
+  if (siteHeader) {
+    var updateHeaderState = function () {
+      if (window.scrollY > 8) {
+        siteHeader.classList.add("is-scrolled");
+      } else {
+        siteHeader.classList.remove("is-scrolled");
+      }
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    updateHeaderState();
+    window.addEventListener("scroll", updateHeaderState, { passive: true });
   }
 
-  /* ===========================
-     HAMBURGER MENU
-     =========================== */
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
-
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      hamburger.setAttribute('aria-expanded', String(isOpen));
+  /* ---------- Active nav link ---------- */
+  (function setActiveNavLink() {
+    var current = window.location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".nav-link").forEach(function (link) {
+      var href = link.getAttribute("href");
+      var hrefPage = href.split("#")[0] || "index.html";
+      if (hrefPage === current || (hrefPage === "index.html" && current === "")) {
+        if (href.indexOf("#") === -1 || hrefPage === current) {
+          link.classList.add("active");
+        }
+      }
     });
+  })();
 
-    // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-        hamburger.setAttribute('aria-expanded', 'false');
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll(".faq-question").forEach(function (button) {
+    var answer = document.getElementById(button.getAttribute("aria-controls"));
+    button.addEventListener("click", function () {
+      var expanded = button.getAttribute("aria-expanded") === "true";
+      document.querySelectorAll(".faq-question").forEach(function (otherButton) {
+        if (otherButton !== button) {
+          otherButton.setAttribute("aria-expanded", "false");
+          var otherAnswer = document.getElementById(otherButton.getAttribute("aria-controls"));
+          if (otherAnswer) otherAnswer.style.maxHeight = null;
+        }
       });
-    });
-
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target) && !mobileMenu.contains(e.target)) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
+      button.setAttribute("aria-expanded", String(!expanded));
+      if (answer) {
+        answer.style.maxHeight = expanded ? null : answer.scrollHeight + "px";
       }
     });
+  });
 
-    // Close on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && hamburger.classList.contains('open')) {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
+  /* ---------- Back to top ---------- */
+  var backToTop = document.getElementById("backToTop");
+  if (backToTop) {
+    var toggleBackToTop = function () {
+      if (window.scrollY > 480) {
+        backToTop.classList.add("is-visible");
+      } else {
+        backToTop.classList.remove("is-visible");
       }
+    };
+    toggleBackToTop();
+    window.addEventListener("scroll", toggleBackToTop, { passive: true });
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  /* ===========================
-     ACTIVE NAV LINK
-     =========================== */
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
-    const href = a.getAttribute('href') || '';
-    const page = href.split('/').pop().split('#')[0] || 'index.html';
-    if (page === currentPath || (currentPath === '' && page === 'index.html')) {
-      a.classList.add('active');
-    }
+  /* ---------- Copyright year ---------- */
+  document.querySelectorAll("[data-current-year]").forEach(function (el) {
+    el.textContent = new Date().getFullYear();
   });
 
-  /* ===========================
-     FAQ ACCORDION
-     =========================== */
-  document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(openItem => {
-        openItem.classList.remove('open');
-      });
-
-      // Open clicked if was closed
-      if (!isOpen) {
-        item.classList.add('open');
-      }
-    });
-  });
-
-  /* ===========================
-     AOS SCROLL ANIMATIONS
-     =========================== */
-  const aosObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.getAttribute('data-aos-delay') || '0');
-        setTimeout(() => {
-          entry.target.classList.add('aos-animate');
-        }, delay);
-        aosObserver.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  document.querySelectorAll('[data-aos]').forEach(el => aosObserver.observe(el));
-
-  /* ===========================
-     SCROLL TO TOP
-     =========================== */
-  const scrollTopBtn = document.querySelector('.scroll-top');
-  if (scrollTopBtn) {
-    window.addEventListener('scroll', () => {
-      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
-
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  /* ===========================
-     CONTACT FORM
-     =========================== */
-  const contactForm = document.querySelector('#contact-form');
+  /* ---------- Contact form: WhatsApp message generator + validation ---------- */
+  var contactForm = document.getElementById("contactForm");
   if (contactForm) {
-    contactForm.addEventListener('submit', e => {
-      e.preventDefault();
+    var fields = {
+      name: document.getElementById("contactName"),
+      whatsapp: document.getElementById("contactWhatsapp"),
+      enquiry: document.getElementById("contactEnquiry"),
+      message: document.getElementById("contactMessage"),
+      consent: document.getElementById("contactConsent")
+    };
+    var successBox = document.getElementById("contactSuccess");
 
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
+    function showError(field, show) {
+      var group = field.closest(".form-group");
+      if (group) group.classList.toggle("has-error", show);
+    }
 
-      // Simulate async submission
-      setTimeout(() => {
-        contactForm.reset();
-        btn.textContent = originalText;
-        btn.disabled = false;
+    function validateForm() {
+      var isValid = true;
 
-        const successMsg = document.querySelector('.form-success');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 5000);
-        }
-      }, 1000);
-    });
-  }
-
-  /* ===========================
-     BLOG SEARCH FILTER
-     =========================== */
-  const blogSearch = document.querySelector('#blog-search');
-  if (blogSearch) {
-    blogSearch.addEventListener('input', () => {
-      const q = blogSearch.value.toLowerCase().trim();
-      document.querySelectorAll('.blog-card').forEach(card => {
-        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
-        const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
-        const visible = !q || title.includes(q) || desc.includes(q);
-        card.style.display = visible ? '' : 'none';
-      });
-    });
-  }
-
-  const blogSearchBtn = document.querySelector('.blog-search-btn');
-  if (blogSearchBtn) {
-    blogSearchBtn.addEventListener('click', () => {
-      const input = document.querySelector('#blog-search');
-      if (input) input.dispatchEvent(new Event('input'));
-    });
-  }
-
-  /* ===========================
-     BLOG CATEGORY FILTER
-     =========================== */
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const cat = btn.getAttribute('data-cat');
-      document.querySelectorAll('.blog-card').forEach(card => {
-        if (!cat || cat === 'all') {
-          card.style.display = '';
-        } else {
-          const cardCat = card.getAttribute('data-category') || '';
-          card.style.display = cardCat === cat ? '' : 'none';
-        }
-      });
-    });
-  });
-
-  /* ===========================
-     SMOOTH HASH SCROLL
-     =========================== */
-  document.querySelectorAll('a[href*="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href') || '';
-      const hashIndex = href.indexOf('#');
-      if (hashIndex === -1) return;
-
-      const hash = href.slice(hashIndex + 1);
-      const page = href.slice(0, hashIndex);
-      const isCurrentPage = !page || page === currentPath || page === '' || page === 'index.html';
-
-      if (isCurrentPage && hash) {
-        const target = document.getElementById(hash);
-        if (target) {
-          e.preventDefault();
-          const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset - 10;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
+      if (!fields.name.value.trim()) {
+        showError(fields.name, true);
+        isValid = false;
+      } else {
+        showError(fields.name, false);
       }
+
+      var whatsappPattern = /^[0-9+\s-]{7,15}$/;
+      if (!whatsappPattern.test(fields.whatsapp.value.trim())) {
+        showError(fields.whatsapp, true);
+        isValid = false;
+      } else {
+        showError(fields.whatsapp, false);
+      }
+
+      if (!fields.enquiry.value) {
+        showError(fields.enquiry, true);
+        isValid = false;
+      } else {
+        showError(fields.enquiry, false);
+      }
+
+      if (!fields.message.value.trim()) {
+        showError(fields.message, true);
+        isValid = false;
+      } else {
+        showError(fields.message, false);
+      }
+
+      if (!fields.consent.checked) {
+        showError(fields.consent, true);
+        isValid = false;
+      } else {
+        showError(fields.consent, false);
+      }
+
+      return isValid;
+    }
+
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (successBox) successBox.classList.remove("is-visible");
+
+      if (!validateForm()) {
+        return;
+      }
+
+      var lines = [
+        "Hello, I need help with Hollah registration.",
+        "Name: " + fields.name.value.trim(),
+        "WhatsApp Number: " + fields.whatsapp.value.trim(),
+        "Enquiry Type: " + fields.enquiry.options[fields.enquiry.selectedIndex].text,
+        "Message: " + fields.message.value.trim()
+      ];
+      var text = encodeURIComponent(lines.join("\n"));
+      var whatsappUrl = "https://wa.me/918132958338?text=" + text;
+
+      if (successBox) {
+        successBox.textContent = "Thank you. Opening WhatsApp with your details now.";
+        successBox.classList.add("is-visible");
+      }
+
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      contactForm.reset();
     });
-  });
 
-  /* ===========================
-     COUNTER ANIMATION
-     =========================== */
-  const counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'));
-        const suffix = el.getAttribute('data-suffix') || '';
-        const duration = 1500;
-        const start = performance.now();
-
-        const animate = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-        counterObserver.unobserve(el);
+    Object.keys(fields).forEach(function (key) {
+      var field = fields[key];
+      if (!field) return;
+      var eventName = field.type === "checkbox" ? "change" : "input";
+      field.addEventListener(eventName, function () {
+        showError(field, false);
       });
-    }, { threshold: 0.5 });
-
-    counters.forEach(c => counterObserver.observe(c));
+    });
   }
 
-  /* ===========================
-     TABLE ROW HIGHLIGHT
-     =========================== */
-  document.querySelectorAll('.commission-table tbody tr, .level-table tbody tr').forEach(row => {
-    row.addEventListener('mouseenter', () => row.classList.add('hovered'));
-    row.addEventListener('mouseleave', () => row.classList.remove('hovered'));
-  });
-
-  /* ===========================
-     LAZY LOAD IMAGES
-     =========================== */
-  if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll(".reveal");
+  if (revealEls.length && "IntersectionObserver" in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
           }
-          imgObserver.unobserve(img);
-        }
-      });
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach(function (el) {
+      observer.observe(el);
     });
-
-    document.querySelectorAll('img[data-src]').forEach(img => imgObserver.observe(img));
-  }
-
-  /* ===========================
-     WHATSAPP BUTTON TOOLTIP
-     =========================== */
-  const waFloat = document.querySelector('.whatsapp-float');
-  if (waFloat) {
-    // Show tooltip after 3s
-    setTimeout(() => {
-      const tooltip = waFloat.querySelector('.whatsapp-tooltip');
-      if (tooltip) {
-        tooltip.style.opacity = '1';
-        tooltip.style.transform = 'translateX(0)';
-        setTimeout(() => {
-          tooltip.style.opacity = '';
-          tooltip.style.transform = '';
-        }, 3000);
-      }
-    }, 3000);
-  }
-
-  /* ===========================
-     PHONE NUMBER FORMATTER
-     =========================== */
-  const phoneInput = document.querySelector('input[type="tel"]');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', e => {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.length > 10) val = val.slice(0, 10);
-      e.target.value = val;
+  } else {
+    revealEls.forEach(function (el) {
+      el.classList.add("is-visible");
     });
   }
-
 })();
