@@ -440,7 +440,7 @@ footer { background: var(--black); color: rgba(255,255,255,0.65); padding: 60px 
    WHATSAPP FLOAT + BACK TO TOP
    ============================================================ */
 .whatsapp-float { position: fixed; bottom: 26px; right: 26px; z-index: 999; display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.whatsapp-float img { width: 54px; height: 54px; border-radius: 50%; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: var(--transition); }
+.whatsapp-float img { width: 162px; height: 162px; border-radius: 50%; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: var(--transition); }
 .whatsapp-float:hover img { transform: scale(1.1); }
 .whatsapp-tooltip { background: var(--black); color: var(--white); font-size: 0.78rem; font-weight: 600; padding: 6px 12px; border-radius: 50px; white-space: nowrap; opacity: 0; transform: translateX(8px); transition: var(--transition); pointer-events: none; }
 .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; transform: translateX(0); }
@@ -485,6 +485,6 @@ footer { background: var(--black); color: rgba(255,255,255,0.65); padding: 60px 
   .btn-hero { padding: 22px 40px; font-size: 1.5rem; }
   .hero-btns { flex-direction: column; align-items: center; }
   .whatsapp-float { bottom: 18px; right: 18px; }
-  .whatsapp-float img { width: 48px; height: 48px; }
+  .whatsapp-float img { width: 100px; height: 100px; }
   #back-to-top { bottom: 80px; right: 18px; }
 }
