@@ -1,5 +1,5 @@
 /* =========================================================
-   HollahOfficial.in — script.js
+   HollahOfficial.com — script.js
    Vanilla JavaScript. No libraries.
    ========================================================= */
 (function () {
