@@ -1,0 +1,18 @@
+export const colors = {
+  background: '#1A1A2E',
+  displayBackground: '#16213E',
+  textPrimary: '#FFFFFF',
+  textSecondary: '#8A8AA3',
+  numberBg: '#232946',
+  numberText: '#FFFFFF',
+  functionBg: '#0F3460',
+  functionText: '#E8E8F0',
+  operatorBg: '#FF6B35',
+  operatorBgActive: '#FF8B5C',
+  operatorText: '#FFFFFF',
+  equalsBg: '#FF6B35',
+  equalsText: '#FFFFFF',
+  historyBackground: '#16213E',
+  historyEntryBorder: '#232946',
+  danger: '#FF6B6B',
+};

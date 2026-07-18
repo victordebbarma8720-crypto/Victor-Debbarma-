@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "CalcMate",
+    "slug": "calcmate",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "backgroundColor": "#1A1A2E"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.calcmate.app"
+    },
+    "android": {
+      "package": "com.calcmate.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#1A1A2E"
+      }
+    }
+  }
+}
