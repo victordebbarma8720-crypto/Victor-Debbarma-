@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sitarliveofficial.com/sitemap.xml
+Sitemap: https://sitarliveofficial.in/sitemap.xml
