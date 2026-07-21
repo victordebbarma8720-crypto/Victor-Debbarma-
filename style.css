@@ -16,9 +16,9 @@
   --primary-light: #8B5CF6;
   --secondary: #F59E0B;
   --accent: #EC4899;
-  --dark: #0F0E17;
-  --dark-2: #1A1830;
-  --dark-3: #252340;
+  --dark: #1A0606;
+  --dark-2: #2E0A0A;
+  --dark-3: #431010;
   --text: #E8E6F0;
   --text-muted: #9D9AB0;
   --text-dark: #1A1A2E;
@@ -27,7 +27,7 @@
   --card-bg: rgba(255,255,255,0.05);
   --card-border: rgba(255,255,255,0.08);
   --gradient-primary: linear-gradient(135deg, #6C3CE1 0%, #EC4899 100%);
-  --gradient-dark: linear-gradient(135deg, #0F0E17 0%, #1A1830 100%);
+  --gradient-dark: linear-gradient(135deg, #1A0606 0%, #2E0A0A 100%);
   --gradient-card: linear-gradient(145deg, rgba(108,60,225,0.15), rgba(236,72,153,0.08));
   --shadow-sm: 0 2px 12px rgba(108,60,225,0.15);
   --shadow-md: 0 8px 32px rgba(108,60,225,0.2);
@@ -170,7 +170,7 @@ ul { list-style: none; }
   right: 0;
   z-index: 1000;
   height: var(--header-h);
-  background: rgba(15, 14, 23, 0.85);
+  background: rgba(26, 6, 6, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -178,7 +178,7 @@ ul { list-style: none; }
 }
 
 .header.scrolled {
-  background: rgba(15, 14, 23, 0.97);
+  background: rgba(26, 6, 6, 0.97);
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 
@@ -299,7 +299,7 @@ ul { list-style: none; }
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 14, 23, 0.98);
+  background: rgba(26, 6, 6, 0.98);
   backdrop-filter: blur(20px);
   z-index: 999;
   flex-direction: column;
@@ -379,8 +379,8 @@ ul { list-style: none; }
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(15,14,23,0.92) 0%,
-    rgba(26,24,48,0.85) 40%,
+    rgba(26,6,6,0.92) 0%,
+    rgba(46,10,10,0.85) 40%,
     rgba(108,60,225,0.2) 100%
   );
 }
