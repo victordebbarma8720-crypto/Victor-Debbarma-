@@ -1,0 +1,25 @@
+{
+  "name": "Aaja Agency India",
+  "short_name": "Aaja Agency",
+  "description": "Join Aaja as a Host or start your own Aaja Agency in India. Registration guidance, onboarding support, earnings information, and weekly payment assistance.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0F0E17",
+  "theme_color": "#6C3CE1",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

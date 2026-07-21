@@ -1,5 +1,5 @@
 /* ===========================
-   LivChat Agency India
+   Aaja Agency India
    script.js - Main JavaScript
    =========================== */
 
