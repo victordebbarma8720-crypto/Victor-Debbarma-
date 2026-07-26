@@ -1,10 +1,20 @@
 /* ===========================
-   LivChat Agency India
+   Sitarlive Agency India
    script.js - Main JavaScript
    =========================== */
 
 (function () {
   'use strict';
+
+  /* ===========================
+     PAGE LOADER
+     =========================== */
+  const loader = document.querySelector('.page-loader');
+  if (loader) {
+    window.addEventListener('load', () => {
+      setTimeout(() => loader.classList.add('loaded'), 200);
+    });
+  }
 
   /* ===========================
      STICKY HEADER
@@ -16,6 +26,21 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  }
+
+  /* ===========================
+     SCROLL PROGRESS BAR
+     =========================== */
+  const progressBar = document.querySelector('.scroll-progress');
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
   }
 
   /* ===========================
@@ -67,7 +92,8 @@
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
     const href = a.getAttribute('href') || '';
-    const page = href.split('/').pop().split('#')[0] || 'index.html';
+    if (href.includes('#')) return; // skip in-page anchors (About Us / Contact) — only whole-page links get highlighted
+    const page = href.split('/').pop() || 'index.html';
     if (page === currentPath || (currentPath === '' && page === 'index.html')) {
       a.classList.add('active');
     }
@@ -81,14 +107,15 @@
       const item = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
 
-      // Close all
       document.querySelectorAll('.faq-item.open').forEach(openItem => {
         openItem.classList.remove('open');
+        const b = openItem.querySelector('.faq-question');
+        if (b) b.setAttribute('aria-expanded', 'false');
       });
 
-      // Open clicked if was closed
       if (!isOpen) {
         item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
       }
     });
   });
@@ -128,36 +155,6 @@
   }
 
   /* ===========================
-     CONTACT FORM
-     =========================== */
-  const contactForm = document.querySelector('#contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', e => {
-      e.preventDefault();
-
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-
-      // Simulate async submission
-      setTimeout(() => {
-        contactForm.reset();
-        btn.textContent = originalText;
-        btn.disabled = false;
-
-        const successMsg = document.querySelector('.form-success');
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 5000);
-        }
-      }, 1000);
-    });
-  }
-
-  /* ===========================
      BLOG SEARCH FILTER
      =========================== */
   const blogSearch = document.querySelector('#blog-search');
@@ -186,8 +183,12 @@
      =========================== */
   document.querySelectorAll('.cat-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
 
       const cat = btn.getAttribute('data-cat');
       document.querySelectorAll('.blog-card').forEach(card => {
@@ -200,6 +201,29 @@
       });
     });
   });
+
+  /* ===========================
+     NEWSLETTER FORM
+     =========================== */
+  const newsletterForm = document.querySelector('#newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = newsletterForm.querySelector('button[type="submit"]');
+      const input = newsletterForm.querySelector('input[type="email"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'Subscribing...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Subscribed ✓';
+        if (input) input.value = '';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2500);
+      }, 800);
+    });
+  }
 
   /* ===========================
      SMOOTH HASH SCROLL
@@ -257,15 +281,7 @@
   }
 
   /* ===========================
-     TABLE ROW HIGHLIGHT
-     =========================== */
-  document.querySelectorAll('.commission-table tbody tr, .level-table tbody tr').forEach(row => {
-    row.addEventListener('mouseenter', () => row.classList.add('hovered'));
-    row.addEventListener('mouseleave', () => row.classList.remove('hovered'));
-  });
-
-  /* ===========================
-     LAZY LOAD IMAGES
+     LAZY LOAD IMAGES (data-src fallback)
      =========================== */
   if ('IntersectionObserver' in window) {
     const imgObserver = new IntersectionObserver(entries => {
@@ -289,7 +305,6 @@
      =========================== */
   const waFloat = document.querySelector('.whatsapp-float');
   if (waFloat) {
-    // Show tooltip after 3s
     setTimeout(() => {
       const tooltip = waFloat.querySelector('.whatsapp-tooltip');
       if (tooltip) {
@@ -301,18 +316,6 @@
         }, 3000);
       }
     }, 3000);
-  }
-
-  /* ===========================
-     PHONE NUMBER FORMATTER
-     =========================== */
-  const phoneInput = document.querySelector('input[type="tel"]');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', e => {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.length > 10) val = val.slice(0, 10);
-      e.target.value = val;
-    });
   }
 
 })();
