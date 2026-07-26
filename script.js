@@ -1,5 +1,5 @@
 /* ===========================
-   LivChat Agency India
+   Sitarlive Official
    script.js - Main JavaScript
    =========================== */
 
