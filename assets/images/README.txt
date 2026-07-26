@@ -1,8 +1,7 @@
-logo.png and favicon.png are already included.
+logo.png, favicon.png and hero.png are already included.
 
 Still place the following image files in this folder before deploying:
 
-hero.webp     - Hero visual, 4:5 portrait orientation (recommended 760x950 or larger)
 host.webp     - Host opportunity card image, 16:10 landscape (recommended 960x600 or larger)
 agency.webp   - Agency opportunity card image, 16:10 landscape (recommended 960x600 or larger)
 
