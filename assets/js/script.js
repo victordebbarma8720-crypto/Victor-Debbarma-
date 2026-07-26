@@ -160,6 +160,50 @@
     });
   }
 
+  /* ---------- Copy Agency Code ---------- */
+  function initCopyCode() {
+    var buttons = document.querySelectorAll("[data-copy-target]");
+    if (!buttons.length) return;
+
+    buttons.forEach(function (btn) {
+      var targetId = btn.getAttribute("data-copy-target");
+      var target = document.getElementById(targetId);
+      if (!target) return;
+
+      btn.addEventListener("click", function () {
+        var text = target.textContent.trim();
+
+        function showCopied() {
+          btn.classList.add("is-copied");
+          var original = btn.getAttribute("aria-label");
+          btn.setAttribute("aria-label", "Copied " + text + " to clipboard");
+          window.setTimeout(function () {
+            btn.classList.remove("is-copied");
+            btn.setAttribute("aria-label", original);
+          }, 2000);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopied, showCopied);
+        } else {
+          var temp = document.createElement("textarea");
+          temp.value = text;
+          temp.style.position = "fixed";
+          temp.style.opacity = "0";
+          document.body.appendChild(temp);
+          temp.select();
+          try {
+            document.execCommand("copy");
+          } catch (e) {
+            /* clipboard unavailable, ignore */
+          }
+          document.body.removeChild(temp);
+          showCopied();
+        }
+      });
+    });
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
@@ -169,5 +213,6 @@
     initScrollReveal();
     initBackToTop();
     initCurrentYear();
+    initCopyCode();
   });
 })();

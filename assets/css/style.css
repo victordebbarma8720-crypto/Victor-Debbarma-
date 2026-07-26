@@ -932,6 +932,104 @@ table.premium-table {
   margin-top: 34px;
 }
 
+/* ---------- App Download & Agency Code ---------- */
+.app-download-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 40px;
+}
+
+.app-download-text h3 {
+  margin-bottom: 8px;
+}
+
+.app-download-text p {
+  max-width: 480px;
+  margin-bottom: 0;
+}
+
+.app-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.agency-code-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 20px;
+  border-radius: 50px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+}
+
+.agency-code-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.agency-code-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: 0.04em;
+}
+
+.copy-code-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  flex-shrink: 0;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.copy-code-btn:hover,
+.copy-code-btn:focus-visible {
+  background: var(--gradient-primary);
+  transform: translateY(-2px);
+}
+
+.copy-code-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.copy-code-btn.is-copied {
+  background: var(--whatsapp-green);
+}
+
+@media (max-width: 700px) {
+  .app-download-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 30px;
+  }
+  .app-download-text p {
+    max-width: none;
+  }
+  .app-download-actions {
+    justify-content: center;
+  }
+}
+
 /* ---------- Timeline / Steps ---------- */
 .timeline {
   display: grid;
