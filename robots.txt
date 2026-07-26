@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://livchatagency.in/sitemap.xml
+Sitemap: https://sitarliveagency.in/sitemap.xml
