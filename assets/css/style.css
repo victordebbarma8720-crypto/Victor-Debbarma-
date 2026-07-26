@@ -338,7 +338,11 @@ summary:focus-visible {
 
 .logo-link img {
   height: 40px;
-  width: auto;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-glass);
+  flex-shrink: 0;
 }
 
 .logo-text {
