@@ -177,7 +177,7 @@ section { position: relative; padding: 96px 0; }
   gap: 20px;
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; }
-.brand img { height: 38px; width: auto; border-radius: 8px; }
+.brand img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px rgba(245,197,90,0.4); }
 .brand span { background: var(--grad-gold-purple); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 .nav-links { display: flex; align-items: center; gap: 6px; }
