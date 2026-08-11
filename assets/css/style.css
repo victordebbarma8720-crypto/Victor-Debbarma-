@@ -252,6 +252,31 @@ button {
   gap: 0.9rem;
 }
 
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+}
+
+.btn-whatsapp {
+  animation: btn-pulse 2.4s ease-in-out infinite;
+}
+
+.btn-whatsapp:hover {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-whatsapp {
+    animation: none;
+  }
+}
+
 /* ---------- Header / Navigation ---------- */
 .site-header {
   position: sticky;
