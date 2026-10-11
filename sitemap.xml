@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://kandyofficial.in/</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Kandy Agency Page -->
   <url>
     <loc>https://kandyofficial.in/kandy-agency.html</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Kandy Hosting Page -->
   <url>
     <loc>https://kandyofficial.in/kandy-hosting.html</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -31,7 +31,7 @@
   <!-- Blog Page -->
   <url>
     <loc>https://kandyofficial.in/blog.html</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -39,28 +39,28 @@
   <!-- Homepage Sections (anchors) -->
   <url>
     <loc>https://kandyofficial.in/#about</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://kandyofficial.in/#contact</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://kandyofficial.in/#earnings</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://kandyofficial.in/#faq</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
