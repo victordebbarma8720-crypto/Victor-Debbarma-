@@ -8,8 +8,15 @@ ErrorDocument 404 /404.html
 # Don't list folder contents
 Options -Indexes
 
-# Serve folder/index.html for clean URLs like /cherry-agency/
 DirectoryIndex index.html
+
+# Old folder-style addresses -> new single-folder pages (permanent redirects)
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^/cherry-agency/?$ /cherry-agency.html
+  RedirectMatch 301 ^/cherry-host/?$ /cherry-host.html
+  RedirectMatch 301 ^/blog/?$ /blog.html
+  RedirectMatch 301 ^/blog/([a-z0-9-]+)/?$ /$1.html
+</IfModule>
 
 # --- Optional: force HTTPS and non-www ---
 # Enable ONLY after the SSL certificate is active for cherryofficial.in in hPanel

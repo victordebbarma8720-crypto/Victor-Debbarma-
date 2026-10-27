@@ -1,5 +1,6 @@
-Put your three image files in this folder (public_html/images/) with these EXACT names.
-Hostinger servers are case-sensitive, so "logo.PNG" is not the same as "logo.png".
+Put your three image files in this SAME folder as index.html (public_html/),
+with these EXACT names. Hostinger servers are case-sensitive, so "logo.PNG"
+is not the same as "logo.png".
 
   logo.PNG     - site logo (header and footer)
   hero.PNG     - homepage hero image and social-share preview image
