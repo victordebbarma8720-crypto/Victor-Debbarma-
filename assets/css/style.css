@@ -226,8 +226,6 @@ strong { color: var(--text); }
   object-fit: contain;
 }
 
-/* The text wordmark is a fallback: it shows only when logo.png is missing */
-.nav-logo img:not(.is-missing) + .nav-logo-text { display: none; }
 .is-missing { display: none !important; }
 
 .nav-logo-text {

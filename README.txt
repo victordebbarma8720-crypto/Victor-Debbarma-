@@ -23,7 +23,7 @@ terms-and-conditions/index.html     Terms and Conditions (footer link only)
 404.html                            "Page not found" page
 assets/css/style.css                All styles
 assets/js/main.js                   Mobile menu, blog search, image fallback, footer year
-assets/images/                      hero.jpg (included); logo.png, favicon.png (YOU must add - see 3)
+assets/images/                      logo.png, hero.jpg, favicon.png (all included)
 robots.txt, sitemap.xml, .htaccess  SEO and server settings
 
 Each page is a folder containing index.html, which gives clean URLs
@@ -39,18 +39,18 @@ assets/js/main.js     - no libraries. The site still works with JavaScript off
                         (except the mobile menu toggle and blog search).
 
 
-3. IMAGES (REQUIRED - NOT INCLUDED)
------------------------------------
-The image files were not available when the site was built. Upload them to
-public_html/assets/images/ with these exact lowercase names:
-    logo.png   favicon.png
-The hero image is already included as assets/images/hero.jpg (1600 x 724,
-rotated upright and cropped from your screenshot). To replace it, upload a new
-hero.jpg and update width/height on its <img> tag in index.html.
-Hostinger is case-sensitive: "Logo.PNG" will NOT work.
-Until they exist, the site hides the missing image and shows a text logo.
-Once logo.png loads, the text wordmark "ChametAgency.in" next to it is hidden
-automatically, so the logo is not duplicated.
+3. IMAGES (INCLUDED)
+--------------------
+All three images are in public_html/assets/images/:
+    logo.png     128 x 128, header and footer (made from your square icon,
+                 black corners made transparent). "ChametAgency.in" text shows beside it.
+    favicon.png  192 x 192, browser tab and phone home-screen icon (same icon).
+    hero.jpg     1600 x 724, homepage hero and social-share image (rotated
+                 upright and cropped from your screenshot).
+To replace one, upload a new file with the SAME lowercase name (Hostinger is
+case-sensitive: "Logo.PNG" will NOT work). If you change hero.jpg's size, update
+width/height on its <img> tag in index.html. If an image is ever missing, the
+site hides it automatically so nothing looks broken.
 
 
 4. UPLOADING TO HOSTINGER
