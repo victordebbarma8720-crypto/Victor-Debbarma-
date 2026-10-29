@@ -8,8 +8,17 @@ ErrorDocument 404 /404.html
 # Don't list folder contents
 Options -Indexes
 
-# Serve index.html for folder URLs such as /chamet-agency/ (clean URLs)
 DirectoryIndex index.html
+
+# Old folder-style addresses -> new single-folder pages (permanent redirects)
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^/chamet-agency/?$ /chamet-agency.html
+  RedirectMatch 301 ^/chamet-hosting/?$ /chamet-hosting.html
+  RedirectMatch 301 ^/privacy-policy/?$ /privacy-policy.html
+  RedirectMatch 301 ^/terms-and-conditions/?$ /terms-and-conditions.html
+  RedirectMatch 301 ^/blog/?$ /blog.html
+  RedirectMatch 301 ^/blog/([a-z0-9-]+)/?$ /$1.html
+</IfModule>
 
 # --- Optional: force HTTPS and non-www ---
 # Enable ONLY after the SSL certificate is active for chametofficialagency.in in hPanel
@@ -36,4 +45,5 @@ DirectoryIndex index.html
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
 </IfModule>

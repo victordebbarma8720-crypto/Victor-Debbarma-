@@ -1,6 +1,6 @@
 /* ===========================
    ChametOfficialAgency.in
-   assets/js/main.js - Main JavaScript (no libraries)
+   main.js - Main JavaScript (no libraries)
    =========================== */
 
 (function () {
