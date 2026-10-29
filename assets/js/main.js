@@ -110,6 +110,45 @@
   }
 
   /* ===========================
+     CALCULATORS (illustrative arithmetic only)
+     =========================== */
+  var num = function (el) {
+    var v = parseFloat(el.value);
+    return isFinite(v) && v >= 0 ? v : null;
+  };
+  var fmt = function (v, max) {
+    return v.toLocaleString('en-US', { maximumFractionDigits: max });
+  };
+  var usd = function (v) {
+    return '$' + v.toLocaleString('en-US', { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  };
+
+  document.querySelectorAll('[data-calc]').forEach(function (box) {
+    var inputs = box.querySelectorAll('input');
+    var out = box.querySelector('output');
+    var type = box.getAttribute('data-calc');
+
+    var update = function () {
+      var a = num(inputs[0]);
+      var b = num(inputs[1]);
+      if (a === null || b === null || (type === 'beans' && b === 0) || (type === 'commission' && b > 100)) {
+        out.textContent = type === 'beans'
+          ? 'Enter a Beans amount and a ratio above zero.'
+          : 'Enter a revenue amount and a rate between 0 and 100.';
+        return;
+      }
+      if (type === 'commission') {
+        out.innerHTML = usd(a) + ' &times; ' + fmt(b, 2) + '% = <strong>' + usd(a * b / 100) + '</strong>';
+      } else {
+        out.innerHTML = fmt(a, 0) + ' Beans &divide; ' + fmt(b, 2) + ' = <strong>' + usd(a / b) + '</strong>';
+      }
+    };
+
+    inputs.forEach(function (input) { input.addEventListener('input', update); });
+    update();
+  });
+
+  /* ===========================
      FOOTER YEAR
      =========================== */
   document.querySelectorAll('[data-year]').forEach(function (el) {

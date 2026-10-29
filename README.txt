@@ -22,8 +22,8 @@ privacy-policy/index.html           Privacy Policy (footer link only)
 terms-and-conditions/index.html     Terms and Conditions (footer link only)
 404.html                            "Page not found" page
 assets/css/style.css                All styles
-assets/js/main.js                   Mobile menu, blog search, image fallback, footer year
-assets/images/                      logo.png, hero.jpg, favicon.png (all included)
+assets/js/main.js                   Mobile menu, calculators, blog search, image fallback, footer year
+assets/images/                      logo, favicon, hero and share image (all included - see 3)
 robots.txt, sitemap.xml, .htaccess  SEO and server settings
 
 Each page is a folder containing index.html, which gives clean URLs
@@ -36,21 +36,22 @@ The 404 page alone uses root paths (/assets/...), because the server can show it
 ---------------------
 assets/css/style.css  - colours are defined as variables at the top (:root).
 assets/js/main.js     - no libraries. The site still works with JavaScript off
-                        (except the mobile menu toggle and blog search).
+                        (except the mobile menu toggle, calculators and blog search).
 
 
-3. IMAGES (INCLUDED)
---------------------
-All three images are in public_html/assets/images/:
-    logo.png     128 x 128, header and footer (made from your square icon,
-                 black corners made transparent). "ChametAgency.in" text shows beside it.
-    favicon.png  192 x 192, browser tab and phone home-screen icon (same icon).
-    hero.jpg     1600 x 724, homepage hero and social-share image (rotated
-                 upright and cropped from your screenshot).
+3. IMAGES (INCLUDED - ORIGINAL ARTWORK)
+---------------------------------------
+All images are original artwork made for this site (no Chamet logos or
+screenshots, to avoid trademark problems). They are in public_html/assets/images/:
+    logo.svg      Original logo (chat bubble + "C"); also the modern browser favicon.
+    logo.png      128 x 128 PNG of the logo, used in the header and footer.
+    favicon.png   192 x 192 PNG favicon / phone home-screen icon.
+    hero.svg      Homepage hero illustration (sharp at any size, ~6 KB).
+    og-image.jpg  1200 x 630 image shown when a page is shared on WhatsApp,
+                  Facebook, X etc.
 To replace one, upload a new file with the SAME lowercase name (Hostinger is
-case-sensitive: "Logo.PNG" will NOT work). If you change hero.jpg's size, update
-width/height on its <img> tag in index.html. If an image is ever missing, the
-site hides it automatically so nothing looks broken.
+case-sensitive). If an image is ever missing, the site hides it automatically.
+Earlier versions that used the Chamet app icon and banner are in the git history.
 
 
 4. UPLOADING TO HOSTINGER
@@ -93,7 +94,7 @@ Only do this AFTER the certificate is active, otherwise visitors get errors.
 8. PERFORMANCE
 --------------
 Test at https://pagespeed.web.dev/ with the live URL. Large images are the usual
-problem: keep hero.jpg under ~300 KB (currently ~130 KB) (compress at tinypng.com or squoosh.app).
+problem: the hero is a ~6 KB SVG and the share image ~70 KB, so images are light.
 No scores have been measured yet - test after uploading.
 
 
@@ -122,3 +123,7 @@ unverified historical/illustrative information. Verify before changing the wordi
   Metwallet - hosting page and payment article.
 - No official agency or host registration URL is published (none was verified).
 - Commission examples (5%, 10%, 12%, 15%) are hypothetical arithmetic only.
+- Calculators: chamet-agency/#commission-calculator (starts at $1,000 x 10%) and
+  chamet-hosting/#beans-calculator (starts at the unverified 10,000 Beans = $1).
+  They only multiply/divide what the visitor types. If you confirm the current
+  Beans ratio, change value="10000" on the bc-ratio input and update the wording.
