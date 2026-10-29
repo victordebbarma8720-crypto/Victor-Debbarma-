@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cherryofficial.in/sitemap.xml
+Sitemap: https://chametofficialagency.in/sitemap.xml

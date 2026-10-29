@@ -1,6 +1,6 @@
 /* ===========================
-   CherryOfficial.in
-   style.css - Complete Styles
+   ChametOfficialAgency.in
+   assets/css/style.css - Shared styles (based on the existing site theme)
    =========================== */
 
 /* CSS Reset & Variables */
@@ -326,15 +326,6 @@ strong { color: var(--text); }
   color: var(--white);
 }
 
-.mobile-menu .mobile-cta {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 420px;
-  margin: 20px auto 0;
-}
-
-.mobile-menu .mobile-cta .btn { width: 100%; }
 
 /* ===========================
    HERO (homepage)
@@ -777,61 +768,6 @@ strong { color: var(--text); }
 .contact-item h3 { font-size: 1rem; margin-bottom: 4px; }
 .contact-item a { font-weight: 700; font-size: 1.05rem; }
 
-.contact-form {
-  background: var(--gradient-card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-}
-
-.contact-form h3 { margin-bottom: 8px; }
-.contact-form > p { font-size: 0.9rem; margin-bottom: 22px; }
-
-.form-group { margin-bottom: 18px; }
-
-.form-group label {
-  display: block;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: var(--radius-sm);
-  padding: 13px 15px;
-  font-size: 1rem;
-  color: var(--white);
-  font-family: inherit;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder { color: rgba(255,255,255,0.4); }
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(225,29,72,0.2);
-}
-
-.form-group textarea { min-height: 110px; resize: vertical; }
-.form-group select option { background: var(--dark-2); color: var(--white); }
-
-.form-error {
-  display: none;
-  color: #FCA5A5;
-  font-size: 0.88rem;
-  margin-bottom: 14px;
-}
-
-.form-error.visible { display: block; }
 
 /* ===========================
    CTA BAND
@@ -1125,6 +1061,112 @@ body.menu-open .whatsapp-float { display: none; }
 }
 
 /* ===========================
+   CHAMET ADDITIONS
+   =========================== */
+.hero-media { aspect-ratio: auto; }
+.hero-media img { max-height: 560px; margin: 0 auto; }
+
+.formula {
+  display: block;
+  background: rgba(255,255,255,0.05);
+  border: 1px dashed rgba(251,191,36,0.45);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+}
+
+.calc-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.calc-card h3 { font-size: 1rem; margin-bottom: 8px; }
+.calc-card .calc-result { font-size: 1.25rem; font-weight: 800; color: var(--white); margin-top: 6px; }
+.calc-card p { font-size: 0.93rem; }
+
+.label-illustrative {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  background: rgba(251,191,36,0.1);
+  border: 1px solid rgba(251,191,36,0.3);
+  border-radius: 50px;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+}
+
+.historical {
+  border: 1px solid rgba(251,191,36,0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  background: rgba(251,191,36,0.04);
+}
+
+.historical > * + * { margin-top: 16px; }
+.historical .data-table tbody th { width: auto; }
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.overview-grid h2 { margin-bottom: 16px; }
+.overview-grid p + p { margin-top: 12px; }
+.overview-grid .btn { margin-top: 24px; }
+
+.contact-card {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--gradient-card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: 40px 28px;
+}
+
+.contact-card .contact-number {
+  display: inline-block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 8px 0 22px;
+  color: var(--white);
+}
+
+.contact-card .btn-row { justify-content: center; }
+.contact-card p + p { margin-top: 10px; }
+
+.prose .cta-inline {
+  background: var(--gradient-card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.prose .cta-inline p { margin-bottom: 16px; }
+.prose .btn { text-decoration: none; }
+.prose .grid-3 { gap: 16px; }
+.prose .data-table td, .prose .data-table th { font-size: 0.95rem; }
+
+.footer-legal { display: flex; flex-wrap: wrap; gap: 16px; }
+.footer-legal a { color: var(--text-muted); font-size: 0.85rem; }
+.footer-legal a:hover { color: var(--primary-light); }
+
+@media (max-width: 768px) {
+  .overview-grid { grid-template-columns: 1fr; gap: 24px; }
+  .contact-card { padding: 30px 20px; }
+}
+
+/* ===========================
    RESPONSIVE
    =========================== */
 @media (max-width: 1100px) {
@@ -1156,7 +1198,6 @@ body.menu-open .whatsapp-float { display: none; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
   .preview-card { padding: 30px 24px; }
   .cta-band { padding: 40px 22px; }
-  .contact-form { padding: 26px 20px; }
   .blog-grid { grid-template-columns: 1fr; }
   .blog-card.featured { padding: 28px; }
 

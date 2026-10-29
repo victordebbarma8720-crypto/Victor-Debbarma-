@@ -1,12 +1,10 @@
 /* ===========================
-   CherryOfficial.in
-   script.js - Main JavaScript
+   ChametOfficialAgency.in
+   assets/js/main.js - Main JavaScript (no libraries)
    =========================== */
 
 (function () {
   'use strict';
-
-  var WHATSAPP_NUMBER = '918132958338';
 
   /* ===========================
      STICKY HEADER
@@ -27,27 +25,46 @@
   var mobileMenu = document.getElementById('mobile-menu');
 
   if (hamburger && mobileMenu) {
+    var menuLinks = mobileMenu.querySelectorAll('a');
+
     var setMenu = function (open) {
       mobileMenu.classList.toggle('open', open);
       document.body.classList.toggle('menu-open', open);
       document.body.style.overflow = open ? 'hidden' : '';
       hamburger.setAttribute('aria-expanded', String(open));
       hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open && menuLinks.length) menuLinks[0].focus();
     };
 
     hamburger.addEventListener('click', function () {
       setMenu(hamburger.getAttribute('aria-expanded') !== 'true');
     });
 
-    // Close when a link is chosen (including same-page anchors like /#contact)
-    mobileMenu.querySelectorAll('a').forEach(function (link) {
+    // Close when a link is chosen (including same-page anchors like #contact)
+    menuLinks.forEach(function (link) {
       link.addEventListener('click', function () { setMenu(false); });
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      if (!mobileMenu.classList.contains('open')) return;
+
+      if (e.key === 'Escape') {
         setMenu(false);
         hamburger.focus();
+        return;
+      }
+
+      // Keep keyboard focus inside the open menu (menu links + the close button)
+      if (e.key === 'Tab' && menuLinks.length) {
+        var first = hamburger;
+        var last = menuLinks[menuLinks.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
 
@@ -59,7 +76,7 @@
 
   /* ===========================
      HIDE MISSING BRAND IMAGES
-     Keeps the layout clean until logo/hero files are uploaded.
+     Keeps the layout clean if an image file has not been uploaded yet.
      =========================== */
   document.querySelectorAll('img[data-hide-on-error]').forEach(function (img) {
     var hide = function () {
@@ -69,37 +86,6 @@
     if (img.complete && img.naturalWidth === 0) hide();
     img.addEventListener('error', hide);
   });
-
-  /* ===========================
-     CONTACT FORM -> WHATSAPP
-     Builds a WhatsApp message from the form; nothing is stored on this site.
-     =========================== */
-  var contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    var errorBox = contactForm.querySelector('.form-error');
-
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var name = contactForm.elements.name.value.trim();
-      var topic = contactForm.elements.topic.value;
-      var message = contactForm.elements.message.value.trim();
-
-      if (!name || !message) {
-        errorBox.textContent = 'Please enter your name and a short message.';
-        errorBox.classList.add('visible');
-        (name ? contactForm.elements.message : contactForm.elements.name).focus();
-        return;
-      }
-
-      errorBox.classList.remove('visible');
-
-      var text = 'Hello, my name is ' + name + '.\n' +
-        'Topic: ' + topic + '\n\n' + message;
-
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
-    });
-  }
 
   /* ===========================
      BLOG SEARCH FILTER

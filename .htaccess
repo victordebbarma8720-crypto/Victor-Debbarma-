@@ -1,5 +1,5 @@
 # ===========================
-# CherryOfficial.in - Hostinger (Apache/LiteSpeed) settings
+# ChametOfficialAgency.in - Hostinger (Apache/LiteSpeed) settings
 # ===========================
 
 # Custom 404 page
@@ -8,24 +8,17 @@ ErrorDocument 404 /404.html
 # Don't list folder contents
 Options -Indexes
 
+# Serve index.html for folder URLs such as /chamet-agency/ (clean URLs)
 DirectoryIndex index.html
 
-# Old folder-style addresses -> new single-folder pages (permanent redirects)
-<IfModule mod_alias.c>
-  RedirectMatch 301 ^/cherry-agency/?$ /cherry-agency.html
-  RedirectMatch 301 ^/cherry-host/?$ /cherry-host.html
-  RedirectMatch 301 ^/blog/?$ /blog.html
-  RedirectMatch 301 ^/blog/([a-z0-9-]+)/?$ /$1.html
-</IfModule>
-
 # --- Optional: force HTTPS and non-www ---
-# Enable ONLY after the SSL certificate is active for cherryofficial.in in hPanel
+# Enable ONLY after the SSL certificate is active for chametofficialagency.in in hPanel
 # (or use hPanel > Security > SSL > "Force HTTPS" instead). Remove the leading # to enable.
 # <IfModule mod_rewrite.c>
 #   RewriteEngine On
 #   RewriteCond %{HTTPS} off [OR]
 #   RewriteCond %{HTTP_HOST} ^www\. [NC]
-#   RewriteRule ^ https://cherryofficial.in%{REQUEST_URI} [L,R=301]
+#   RewriteRule ^ https://chametofficialagency.in%{REQUEST_URI} [L,R=301]
 # </IfModule>
 
 # Compression
