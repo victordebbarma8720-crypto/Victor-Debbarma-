@@ -46,6 +46,8 @@ public_html/assets/images/ with these exact lowercase names:
     logo.png   hero.png   favicon.png
 Hostinger is case-sensitive: "Logo.PNG" will NOT work.
 Until they exist, the site hides the missing image and shows a text logo.
+Once logo.png loads, the text wordmark "ChametAgency.in" next to it is hidden
+automatically, so the logo is not duplicated.
 Tip: once hero.png is uploaded, add its real width and height to the
 <img src="assets/images/hero.png" ...> tag in index.html, e.g. width="1200" height="900".
 
@@ -102,6 +104,10 @@ No scores have been measured yet - test after uploading.
 - Adding an article: copy a folder in blog/, rename it, edit title, meta description,
   canonical URL, H1, content and JSON-LD; add a card to blog/index.html; add the URL to sitemap.xml.
 - WhatsApp number: search all files for 918132958338 and "+91 81329 58338".
+  NOTE: the original brief gave the number +91 81329 58338 but the link
+  wa.me/919132958338 (8132... vs 9132...). The site uses the written number,
+  wa.me/918132958338. If 9132958338 is actually correct, replace 918132958338
+  and "+91 81329 58338" in every file.
 
 
 10. FIGURES THAT REQUIRE VERIFICATION

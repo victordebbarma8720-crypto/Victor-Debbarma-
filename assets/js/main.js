@@ -81,7 +81,7 @@
   document.querySelectorAll('img[data-hide-on-error]').forEach(function (img) {
     var hide = function () {
       var wrapper = img.closest('[data-image-wrapper]');
-      (wrapper || img).style.display = 'none';
+      (wrapper || img).classList.add('is-missing');
     };
     if (img.complete && img.naturalWidth === 0) hide();
     img.addEventListener('error', hide);
