@@ -23,7 +23,7 @@ terms-and-conditions/index.html     Terms and Conditions (footer link only)
 404.html                            "Page not found" page
 assets/css/style.css                All styles
 assets/js/main.js                   Mobile menu, blog search, image fallback, footer year
-assets/images/                      logo.png, hero.png, favicon.png (YOU must add these - see 3)
+assets/images/                      hero.jpg (included); logo.png, favicon.png (YOU must add - see 3)
 robots.txt, sitemap.xml, .htaccess  SEO and server settings
 
 Each page is a folder containing index.html, which gives clean URLs
@@ -43,13 +43,14 @@ assets/js/main.js     - no libraries. The site still works with JavaScript off
 -----------------------------------
 The image files were not available when the site was built. Upload them to
 public_html/assets/images/ with these exact lowercase names:
-    logo.png   hero.png   favicon.png
+    logo.png   favicon.png
+The hero image is already included as assets/images/hero.jpg (1600 x 724,
+rotated upright and cropped from your screenshot). To replace it, upload a new
+hero.jpg and update width/height on its <img> tag in index.html.
 Hostinger is case-sensitive: "Logo.PNG" will NOT work.
 Until they exist, the site hides the missing image and shows a text logo.
 Once logo.png loads, the text wordmark "ChametAgency.in" next to it is hidden
 automatically, so the logo is not duplicated.
-Tip: once hero.png is uploaded, add its real width and height to the
-<img src="assets/images/hero.png" ...> tag in index.html, e.g. width="1200" height="900".
 
 
 4. UPLOADING TO HOSTINGER
@@ -92,7 +93,7 @@ Only do this AFTER the certificate is active, otherwise visitors get errors.
 8. PERFORMANCE
 --------------
 Test at https://pagespeed.web.dev/ with the live URL. Large images are the usual
-problem: keep hero.png under ~300 KB (compress at tinypng.com or squoosh.app).
+problem: keep hero.jpg under ~300 KB (currently ~130 KB) (compress at tinypng.com or squoosh.app).
 No scores have been measured yet - test after uploading.
 
 
