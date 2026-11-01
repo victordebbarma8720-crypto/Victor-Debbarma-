@@ -29,7 +29,8 @@ Shared files:
 style.css                               All styles
 main.js                                 Mobile menu, calculators, blog search, image fallback, footer year
 logo.png, favicon.png, favicon-32.png,
-hero.svg, og-image.jpg                  Images (see 3)
+Hero.png, Hero-800.webp, Hero-1200.webp,
+og-image.jpg                           Images (see 3)
 robots.txt, sitemap.xml, .htaccess      SEO and server settings
 
 Page addresses end in .html, e.g. https://chametofficialagency.in/chamet-agency.html
@@ -54,7 +55,8 @@ screenshots, to avoid trademark problems). They sit in public_html next to index
     logo.png      160 x 160 round Chamet logo (supplied), used in the header and footer.
     favicon.png   192 x 192 round Chamet logo - favicon / phone home-screen icon.
     favicon-32.png 32 x 32 browser-tab icon.
-    hero.svg      Homepage hero illustration (sharp at any size, ~6 KB).
+    Hero-1200.webp, Hero-800.webp  Homepage hero image (supplied app screens), WebP for fast loading.
+    Hero.png      Same hero image for very old browsers that cannot show WebP.
     og-image.jpg  1200 x 630 image shown when a page is shared on WhatsApp,
                   Facebook, X etc.
 To replace one, upload a new file with the SAME lowercase name (Hostinger is
@@ -102,7 +104,7 @@ Only do this AFTER the certificate is active, otherwise visitors get errors.
 8. PERFORMANCE
 --------------
 Test at https://pagespeed.web.dev/ with the live URL. Large images are the usual
-problem: the hero is a ~6 KB SVG and the share image ~70 KB, so images are light.
+problem: the hero is ~50-90 KB WebP and the share image ~70 KB, so images are light.
 No scores have been measured yet - test after uploading.
 
 
