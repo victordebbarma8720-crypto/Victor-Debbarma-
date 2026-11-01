@@ -1017,6 +1017,26 @@ strong { color: var(--text); }
   fill: #FFFFFF;
 }
 
+/* Pulse rings behind the button */
+.whatsapp-float::before,
+.whatsapp-float::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25D366;
+  z-index: -1;
+  animation: waPulse 2.4s ease-out infinite;
+}
+.whatsapp-float::after { animation-delay: 1.2s; }
+@keyframes waPulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float::before, .whatsapp-float::after { animation: none; display: none; }
+}
+
 /* Hide the floating button while the full-screen mobile menu is open */
 body.menu-open .whatsapp-float { display: none; }
 
