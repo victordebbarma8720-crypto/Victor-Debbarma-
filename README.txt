@@ -28,7 +28,7 @@ terms-and-conditions.html               Terms and Conditions (footer link only)
 Shared files:
 style.css                               All styles
 main.js                                 Mobile menu, calculators, blog search, image fallback, footer year
-logo.svg, logo.png, favicon.png,
+logo.png, favicon.png, favicon-32.png,
 hero.svg, og-image.jpg                  Images (see 3)
 robots.txt, sitemap.xml, .htaccess      SEO and server settings
 
@@ -46,13 +46,14 @@ main.js    - no libraries. The site still works with JavaScript off
              (except the mobile menu toggle, calculators and blog search).
 
 
-3. IMAGES (INCLUDED - ORIGINAL ARTWORK)
----------------------------------------
-All images are original artwork made for this site (no Chamet logos or
+3. IMAGES (INCLUDED)
+-------------------
+The logo and favicon are the Chamet logo supplied by the site owner. The other
+images are original artwork made for this site (no Chamet
 screenshots, to avoid trademark problems). They sit in public_html next to index.html:
-    logo.svg      Original logo (chat bubble + "C"); also the modern browser favicon.
-    logo.png      128 x 128 PNG of the logo, used in the header and footer.
-    favicon.png   192 x 192 PNG favicon / phone home-screen icon.
+    logo.png      160 x 160 round Chamet logo (supplied), used in the header and footer.
+    favicon.png   192 x 192 round Chamet logo - favicon / phone home-screen icon.
+    favicon-32.png 32 x 32 browser-tab icon.
     hero.svg      Homepage hero illustration (sharp at any size, ~6 KB).
     og-image.jpg  1200 x 630 image shown when a page is shared on WhatsApp,
                   Facebook, X etc.
