@@ -41,8 +41,13 @@ The 404 page alone uses root paths (/style.css), because the server can show it 
 
 2. CSS AND JAVASCRIPT
 ---------------------
-style.css  - colours are defined as variables at the top (:root).
-main.js    - no libraries. The site still works with JavaScript off
+style.css  - premium theme: onyx black, champagne gold and rose. Colours,
+             gradients and fonts are variables at the top (:root).
+             Headings use Playfair Display, body text uses Inter (both from
+             Google Fonts, linked in each page's <head>; system fonts are used
+             if they cannot load).
+main.js    - no libraries. Adds a gentle fade-in as sections scroll into view
+             (off for visitors who prefer reduced motion). The site still works with JavaScript off
              (except the mobile menu toggle, calculators and blog search).
 
 

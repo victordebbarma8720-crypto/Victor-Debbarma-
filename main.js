@@ -149,6 +149,37 @@
   });
 
   /* ===========================
+     REVEAL ON SCROLL
+     Only elements that start below the fold are animated, so nothing that is
+     already on screen flickers. Content stays visible without JavaScript.
+     =========================== */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var revealTargets = document.querySelectorAll(
+      '.section-header, .overview-grid > *, .grid-2 > *, .grid-3 > *, .grid-4 > *, ' +
+      '.steps > li, .blog-grid > *, .faq-item, .about-grid > *, .contact-card, .cta-band, .trust-item, ' +
+      '.calculator, .table-wrapper, .footer-grid > *'
+    );
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    document.documentElement.classList.add('js');
+    revealTargets.forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      var siblings = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.style.setProperty('--delay', Math.min(siblings % 4, 3) * 0.08 + 's');
+      el.classList.add('reveal');
+      io.observe(el);
+    });
+  }
+
+  /* ===========================
      FOOTER YEAR
      =========================== */
   document.querySelectorAll('[data-year]').forEach(function (el) {
