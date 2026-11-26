@@ -618,6 +618,10 @@ ul { list-style: none; }
   gap: 20px;
 }
 
+.features-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
 /* ===========================
    HOW IT WORKS
    =========================== */
